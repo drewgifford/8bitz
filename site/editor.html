@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<head>
+<style>
+    @font-face {
+    font-family: 'dos';
+    src: url('perfect_dos_vga_437_win-webfont.woff2') format('woff2'),
+         url('perfect_dos_vga_437_win-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    }
+
+    * {
+        font-family: "dos", monospace;
+        color: white;
+    }
+    body {
+        margin: 0;
+        background: black;
+        padding: 1em;
+        overflow-y: hidden;
+    }
+    h1,h2,h3,h4,h5,p {
+        margin: 0;
+    }
+    p {
+        font-size: 24px;
+        padding: 10px;
+        display: inline;
+    }
+    .fullContainer {
+        border-width: 10px;
+        border-color: white;
+        border-style: double;
+        height: calc(100vh - 4em);
+        padding: 1em;
+    }
+    .background {
+        background: #008080;
+    }
+    input[type="text"]{
+        background: transparent;
+        font-size: 24px;
+        padding: 10px;
+        color: white;
+        border: none;
+        max-width: unset;
+        min-width: 500px;
+        outline: none;
+    }
+    .section {
+        border-bottom: 2px solid white;
+        padding-bottom: 1em;
+        margin-bottom: 1em;
+        position: relative;
+        
+    }
+    .section.vertical {
+        border-left: none;
+        border-right: none;
+        border-top: 2px solid white;
+        border-bottom: 2px solid white;
+    }
+    
+    .section.full {
+        border: 2px solid white;
+    }
+    .section.double:not(.vertical) {
+        border-style: double;
+    }
+    .section.vertical.double {
+        border-top: 2px double white;
+        border-bottom: 2px double white;
+    }
+    .label {
+        top: -0.75em;
+        left: 2em;
+        position: absolute;
+        background: black;
+        z-index: 1;
+    }
+    .instruments {
+        padding: 3em 0em 2em 1em;
+        z-index: 5;
+        
+    }
+    .layer {
+        padding: 2em;
+        border-bottom: 1px solid #808080;
+    }
+    .instruments p {
+        text-transform: uppercase;
+        background: #303000;
+        z-index: 5;
+        margin: 0 0.25em;
+        cursor: pointer;
+    }
+    .mute {
+        text-transform: uppercase;
+        cursor: pointer;
+        background: #808080;
+        color: white;
+        margin-left: 2em;
+    }
+    .instruments p.selected {
+        background-color: white !important;
+        color: black;
+    }
+    .layers,.music {
+        display: inline-block;
+    }
+    .layers {
+        min-width: 300px;
+        border-right: 2px solid white;
+    }
+    #square {
+        background: #800000;
+    }
+    #saw {
+        background: #008000;
+    }
+    #sine {
+        background: #800080;
+    }
+    #triangle {
+        background: #000080;
+    }
+    #noise {
+        background: #808000;
+    }
+</style>
+<script src="./band.js"></script>
+</head>
+<body>
+
+    <div class="fullContainer">
+        <div class="section">
+            <p class="background">FiveBit Audio Synthesizer for DOS</p>
+
+            <p><input type="text" placeholder="Click to edit song name" maxlength=24></p>
+        </div>
+
+        <div class="section full" style="margin-top: 2em">
+            <div class="section">
+                <p class="label">Instruments</p>
+
+                <div class="instruments">
+
+                    <p id="square">Square</p>
+                    <p id="saw">Saw</p>
+                    <p id="sine">Sine</p>
+                    <p id="triangle">Triangle</p>
+                    <p id="noise">Noise</p>
+
+                </div>
+            </div>
+
+            <div class="section double vertical">
+                <p class="label">Layers</p>
+                <div class="layers">
+                    <div class="layer">
+                        <p>Layer 1</p><p class="mute">Mute</p>
+                    </div>
+                    <div class="layer">
+                        <p>Layer 2</p><p class="mute">Mute</p>
+                    </div>
+                </div>
+                <div class="music">
+                    <div class="measure">
+                        <div class="beat">
+
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>    
+<script>
+
+    // create web audio api context
+var audioCtx = new(window.AudioContext || window.webkitAudioContext)();
+
+function playNote(type, frequency, duration, vol) {
+  // create Oscillator node
+
+
+  //SQUARE OSCILLATOR
+    var oscillator = audioCtx.createOscillator();
+    oscillator.type = type;
+    oscillator.frequency.value = frequency;
+    var gainNode = audioCtx.createGain();
+
+    oscillator.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+    
+    oscillator.start();
+
+
+  setTimeout(
+    function() {
+        gainNode.gain.setValueAtTime(gainNode.gain.value, audioCtx.currentTime); 
+        gainNode.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.03);
+        setTimeout(function(){
+            oscillator.stop();
+        }, 30)
+    }, duration);
+    }
+
+$("#square:not(.selected)").click(function(){
+    playNote("square",174.6141, 60, 5);
+    $(".instruments p").removeClass("selected");
+    $(this).addClass("selected");
+});
+$("#saw:not(.selected)").click(function(){
+    playNote("sawtooth",174.6141, 60, 5);
+    $(".instruments p").removeClass("selected");
+    $(this).addClass("selected");
+});
+$("#sine:not(.selected)").click(function(){
+    playNote("sine",174.6141, 60, 5);
+    $(".instruments p").removeClass("selected");
+    $(this).addClass("selected");
+});
+$("#triangle:not(.selected)").click(function(){
+    playNote("triangle",174.6141, 60, 5);
+    $(".instruments p").removeClass("selected");
+    $(this).addClass("selected");
+});
+$("#noise:not(.selected)").click(function(){
+    playNote("noise",174.6141, 60, 5);
+    $(".instruments p").removeClass("selected");
+    $(this).addClass("selected");
+});
+    
+
+
+    
+</script>
+</body>
