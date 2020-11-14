@@ -107,7 +107,6 @@
     }
     .layers {
         min-width: 300px;
-        max-height: 33vh;
         border-right: 2px solid white;
     }
     
@@ -130,17 +129,16 @@
         background: #ff0000;
     }
     .piano {
-        margin: 2em 1em;
-        padding: 1em;
-        border: 2px solid white;
+        /*margin: 2em 1em;*/
+        border: 0;
         display: inline-block;
     }
     .key {
         text-align: center;
-        width: 60px;
+        width: 40px;
         background: white;
-        padding-top: 100px;
-        padding-bottom: 30px;
+        padding-top: 55px;
+        padding-bottom: 10px;
         display: inline-block;
         vertical-align: top;
         z-index: 2;
@@ -154,17 +152,20 @@
             user-select: none; /* Non-prefixed version, currently */
     }
     .key:not(.after){
-        margin-left: 10px;
+        margin-left: 5px;
     }
     .key:not(.minor) p, .key:not(.minor) p span {
         color: black;
     }
     .key.minor {
-        padding-top: 40px;
+        padding-top: 20px;
         background: black;
-        width: 50px;
-        margin-left: -25px;
+        width: 40px;
+        margin-left: -20px;
         z-index: 300;
+    }
+    .key.minor p {
+        padding: 0;
     }
     .key.after {
         margin-left: -25px;
@@ -181,10 +182,28 @@
     input[type="number"]#tempo {
         width: 2em;
     }
+    .optionPanel {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+    }
+    .optionPanel .instruments {
+        grid-column: 1;
+        grid-row: 1;
+    }
+    .optionPanel .piano {
+        grid-column: 2;
+        grid-row: 1 / span 2;
+        text-align: right;
+    }
+    .optionPanel .options {
+        grid-column: 1;
+        grid-row: 2;
+    }
     .octave {
         text-align: center;
         display: inline-block;
-        margin: 40px 20px 0px 20px;
+        margin: 0px 20px;
     }
 
     input[type="number"]::-webkit-outer-spin-button,
@@ -260,7 +279,6 @@
         border-right: 3px solid #fff;
     }
     .layers {
-        overflow-y: scroll;
         overflow-x: hidden;
     }
     .measures {

@@ -14,7 +14,7 @@
         </div>
 
         <div class="section " style="margin-top: 2em">
-            <div class="section">
+            <div class="section optionPanel">
 
                 <div class="instruments noselect">
 
@@ -26,6 +26,58 @@
                     <p id="remove">X</p>
 
                 </div>
+                <div class="piano noselect">
+                    <div class="octave">
+                        <p>Octave</p><br>
+                        <div class="increment noselect" id="decrease">
+                            <p>-</p>
+                        </div>
+                        <input type="number" id="octave" value=4 readonly>
+                        <div class="increment noselect" id="increase">
+                            <p>+</p>
+                        </div>
+                    </div>
+
+                    <div class="key" id="keyC">
+                        <p>C<span class="currentOctave">4</span></p>
+                    </div>
+                    <div class="key minor" id="keyCsharp">
+                        <p>C#<span class="currentOctave">4</span></p>
+                    </div>
+                    <div class="key after" id="keyD">
+                        <p>D<span class="currentOctave">4</span></p>
+                    </div>
+                    <div class="key minor" id="keyDsharp">
+                        <p>D#<span class="currentOctave">4</span></p>
+                    </div>
+                    <div class="key after" id="keyE" >
+                        <p>E<span class="currentOctave">4</span></p>
+                    </div>
+                    <div class="key selected" id="keyF">
+                        <p>F<span class="currentOctave">4</span></p>
+                    </div>
+                    <div class="key minor" id="keyFsharp">
+                        <p>F#<span class="currentOctave">4</span></p>
+                    </div>
+                    <div class="key after" id="keyG">
+                        <p>G<span class="currentOctave">4</span></p>
+                    </div>
+                    <div class="key minor" id="keyGsharp">
+                        <p>G#<span class="currentOctave">4</span></p>
+                    </div>
+                    <div class="key after" id="keyA">
+                        <p>A<span class="currentOctave">4</span></p>
+                    </div>
+                    <div class="key minor" id="keyAsharp">
+                        <p>A#<span class="currentOctave">4</span></p>
+                    </div>
+                    <div class="key after" id="keyB">
+                        <p>B<span class="currentOctave">4</span></p>
+                    </div>
+                    <div class="key" id="keyChigh">
+                        <p>C<span class="currentOctaveUp">5</span></p>
+                    </div>
+                </div>
                 <div class="options">
                     <p class="tempo">Tempo: <input id="tempo" type="number" value=120></p>
 
@@ -34,6 +86,8 @@
                     <p id="stop">Stop</p>
                     <p id="save">Save</p>
                 </div>
+
+                
             </div>
 
             <div class="section double">
@@ -46,63 +100,6 @@
                 
             </div>
         </div>
-
-        <div class="piano noselect section double">
-
-            <div class="key" id="keyC">
-                <p>C<span class="currentOctave">4</span></p>
-            </div>
-            <div class="key minor" id="keyCsharp">
-                <p>C#<span class="currentOctave">4</span></p>
-            </div>
-            <div class="key after" id="keyD">
-                <p>D<span class="currentOctave">4</span></p>
-            </div>
-            <div class="key minor" id="keyDsharp">
-                <p>D#<span class="currentOctave">4</span></p>
-            </div>
-            <div class="key after" id="keyE" >
-                <p>E<span class="currentOctave">4</span></p>
-            </div>
-            <div class="key selected" id="keyF">
-                <p>F<span class="currentOctave">4</span></p>
-            </div>
-            <div class="key minor" id="keyFsharp">
-                <p>F#<span class="currentOctave">4</span></p>
-            </div>
-            <div class="key after" id="keyG">
-                <p>G<span class="currentOctave">4</span></p>
-            </div>
-            <div class="key minor" id="keyGsharp">
-                <p>G#<span class="currentOctave">4</span></p>
-            </div>
-            <div class="key after" id="keyA">
-                <p>A<span class="currentOctave">4</span></p>
-            </div>
-            <div class="key minor" id="keyAsharp">
-                <p>A#<span class="currentOctave">4</span></p>
-            </div>
-            <div class="key after" id="keyB">
-                <p>B<span class="currentOctave">4</span></p>
-            </div>
-            <div class="key" id="keyChigh">
-                <p>C<span class="currentOctaveUp">5</span></p>
-            </div>
-
-
-            <div class="octave">
-                <p>Octave</p><br>
-                <div class="increment noselect" id="decrease">
-                    <p>-</p>
-                </div>
-                <input type="number" id="octave" value=4 readonly>
-                <div class="increment noselect" id="increase">
-                    <p>+</p>
-                </div>
-            </div>
-        </div>
-
-
     </div>
 <script src="https://tonejs.github.io/build/Tone.js"></script>
 <script src="./music.js"></script>
