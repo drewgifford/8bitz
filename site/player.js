@@ -11,44 +11,11 @@
     let isDown = false;
     let startX;
     let scrollLeft;
+    var b = 0;
     
-    function initialize(){
-        var measureString = "";
-        for(var i =0; i < layers; i++){
-            $(".layers").append(`
-            <div class="layer" id="layer-`+i+`">
-                <p>Layer `+i+`</p><p class="mute">Mute</p>
-            </div>`);
-            measureString = measureString + `<div class="note"></div>`
-        }
-        $(".layers").append('<div class="measures noselect"> <div class="playMarker"></div> </div>');
-        for(var i = 0; i < measures; i++){
-            
-            $(".layers .measures").append(`
-                <div class="measure" id='measure-`+(i+1)+`'>
-                    <p class="measureNumber">`+(i+1)+`</p>
-                    <div class="beat">
-                        `+measureString+`
-                    </div>
-                    <div class="beat">
-                        `+measureString+`
-                    </div>
-                    <div class="beat">
-                        `+measureString+`
-                    </div>
-                    <div class="beat">
-                        `+measureString+`
-                    </div>
-                </div>
-            `)
     
-        }
-    
-        $(".measures").height(layers*60);
-    }
-    
-    initialize();
-    
+    initializeJson(`{"name":"Untitled Song","measures":[{"index":0,"beats":{"1":["triangle,F4","triangle,F4","triangle,F4","triangle,F4","triangle,F4","triangle,F4"],"2":["","triangle,F4","triangle,F4","triangle,F4","",""],"3":["triangle,F4","triangle,F4","triangle,F4","triangle,F4","triangle,F4","triangle,F4"],"4":["","","","","",""]}},{"index":1,"beats":{"1":["sine,D4","sine,D4","sine,D4","sine,D4","sine,D4","sine,D4"],"2":["","","","","",""],"3":["","","","","",""],"4":["","triangle,F4","","","noise,N",""]}},{"index":2,"beats":{"1":["","","triangle,F4","","",""],"2":["","","","triangle,F4","",""],"3":["","","triangle,F4","","noise,N",""],"4":["","triangle,F4","","","",""]}},{"index":3,"beats":{"1":["","","triangle,F4","","",""],"2":["","","","triangle,F4","",""],"3":["","","","","",""],"4":["","","","","",""]}},{"index":4,"beats":{"1":["","","","","",""],"2":["","","","","",""],"3":["","","","","",""],"4":["","","","","",""]}},{"index":5,"beats":{"1":["","","","","",""],"2":["","","","","",""],"3":["","","","","",""],"4":["","","","","",""]}},{"index":6,"beats":{"1":["","","","","",""],"2":["","","","","",""],"3":["","","","","",""],"4":["","","","","",""]}},{"index":7,"beats":{"1":["","","","","",""],"2":["","","","","",""],"3":["","","","","",""],"4":["","","","","",""]}},{"index":8,"beats":{"1":["","","","","",""],"2":["","","","","",""],"3":["","","","","",""],"4":["","","","","",""]}},{"index":9,"beats":{"1":["","","","","",""],"2":["","","","","",""],"3":["","","","","",""],"4":["","","","","",""]}},{"index":10,"beats":{"1":["","","","","",""],"2":["","","","","",""],"3":["","","","","",""],"4":["","","","","",""]}},{"index":11,"beats":{"1":["","","","","",""],"2":["","","","","",""],"3":["","","","","",""],"4":["","","","","",""]}},{"index":12,"beats":{"1":["","","","","",""],"2":["","","","","",""],"3":["","","","","",""],"4":["","","","","",""]}},{"index":13,"beats":{"1":["","","","","",""],"2":["","","","","",""],"3":["","","","","",""],"4":["","","","","",""]}},{"index":14,"beats":{"1":["","","","","",""],"2":["","","","","",""],"3":["","","","","",""],"4":["","","","","",""]}},{"index":15,"beats":{"1":["","","","","",""],"2":["","","","","",""],"3":["","","","","",""],"4":["","","","","",""]}},{"index":16,"beats":{"1":["","","","","",""],"2":["","","","","",""],"3":["","","","","",""],"4":["","","","","",""]}},{"index":17,"beats":{"1":["","","","","",""],"2":["","","","","",""],"3":["","","","","",""],"4":["","","","","",""]}},{"index":18,"beats":{"1":["","","","","",""],"2":["","","","","",""],"3":["","","","","",""],"4":["","","","","",""]}},{"index":19,"beats":{"1":["","","","","",""],"2":["","","","","",""],"3":["","","","","",""],"4":["","","","","",""]}}]}`);
+    //initialize();
     
     function playNote(type, frequency, duration, pitch) {
        
@@ -283,3 +250,118 @@ slider.addEventListener("mousemove", e => {
   slider.scrollLeft = scrollLeft - walk;
 });
 
+
+
+
+function initializeJson(json){
+    $(".layers").html("");
+    
+    json = JSON.parse(json);
+    var json_tempo = 120;
+    var json_name = json.name;
+    var json_measures = json.measures.length;
+    var json_layers = 6;
+
+    var json_measures_object = json.measures;
+    console.log(json);
+
+    var measureString = "";
+    for(var i =0; i < json_layers; i++){
+        $(".layers").append(`
+        <div class="layer" id="layer-`+i+`">
+            <p>Layer `+i+`</p><p class="mute">Mute</p>
+        </div>`);
+        measureString = measureString + `<div class="note"></div>`
+    }
+    $(".layers").append('<div class="measures noselect"> <div class="playMarker"></div> </div>');
+    for(var i = 0; i < json_measures; i++){
+
+
+
+        var m = json_measures_object[i];
+        
+        var mObj = $(".layers .measures").append(`
+            <div class="measure" id='measure-`+(i+1)+`'>
+                <p class="measureNumber">`+(i+1)+`</p>
+            </div>
+        `);
+
+        //Loop through the 4 beats
+        for(var i1 = 1 ; i1 < Object.keys(m.beats).length+1; i1++){
+                var beat_obj = $(".layers .measures #measure-"+(i+1)).append("<div class='beat beat-"+i1+"'></div>");
+                
+                var currentBeat = m.beats[i1.toString()];
+
+                //Loop through all notes in a beat
+                for(var i2 = 0; i2 < json_layers; i2++){
+                    
+                    var currentNote = currentBeat[i2];
+
+                    var str = ".layers .measures #measure-"+(i+1)+" .beat-"+(i1);
+                    if (currentNote === undefined || currentNote.length == 0){
+                        $(str).append("<div class='note'> <div class='fill'></div></div>");
+                    } else {
+                        console.log(currentNote);
+                        var bType = currentNote.split(",")[0];
+                        var bPitch  = currentNote.split(",")[1];
+                        $(str).append("<div class='note "+bType+"'> <div class='fill'><p>"+bPitch+"</p></div></div>");
+                    }
+                }
+                /*if(no.constructor === Array){
+                    for(var e in no){
+                        var bType = e.split(",")[0];
+                        var bPitch  = e.split(",")[1];
+                        $(".layers .measures #measure-"+(i+1)+" .beat:nth-of-type("+i1+")").append("<div class='note "+bType+"'> <div class='fill'>"+bPitch+"</div></div>");
+
+                    }
+                } else {
+                    for(var e = 0; e < json_layers; e++){
+                        $(".layers .measures #measure-"+(i+1)+" .beat:nth-of-type("+i1+")").append("<div class='note'> <div class='fill'></div></div>");
+                    }
+                }*/
+
+
+
+            
+        }
+
+    }
+
+    $(".measures").height(layers*60);
+}
+
+
+function initialize(){
+    var measureString = "";
+    for(var i =0; i < layers; i++){
+        $(".layers").append(`
+        <div class="layer" id="layer-`+i+`">
+            <p>Layer `+i+`</p><p class="mute">Mute</p>
+        </div>`);
+        measureString = measureString + `<div class="note"></div>`
+    }
+    $(".layers").append('<div class="measures noselect"> <div class="playMarker"></div> </div>');
+    for(var i = 0; i < measures; i++){
+        
+        $(".layers .measures").append(`
+            <div class="measure" id='measure-`+(i+1)+`'>
+                <p class="measureNumber">`+(i+1)+`</p>
+                <div class="beat">
+                    `+measureString+`
+                </div>
+                <div class="beat">
+                    `+measureString+`
+                </div>
+                <div class="beat">
+                    `+measureString+`
+                </div>
+                <div class="beat">
+                    `+measureString+`
+                </div>
+            </div>
+        `)
+
+    }
+
+    $(".measures").height(layers*60);
+}

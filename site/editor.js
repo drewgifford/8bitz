@@ -98,7 +98,7 @@ $(".note").click(function(){
 function save(){
 
     var obj = {};
-
+    var layers = 6;
 
     obj.name = $("#name").val();
     if(obj.name == ""){ obj.name = "Untitled Song"}
@@ -116,13 +116,13 @@ function save(){
             var notes = getNotes(e+1, i);
             final.beats[i] = [];
 
-            notes.each(function(){
-                var pitch = $(notes[e]).find("p").html();
+            notes.each(function(t){
+                var pitch = $(notes[t]).find("p").html();
 
-                console.log($(notes[e]).hasClass("square"));
+                console.log($(notes[t]).hasClass("square"));
 
                 var note = false;
-                var n = $(notes[e]);
+                var n = $(notes[t]);
                 if(n.hasClass("square")){ note = "square"}
                 else if(n.hasClass("triangle")){ note = "triangle"}
                 else if(n.hasClass("sawtooth")){ note = "sawtooth"}
@@ -132,6 +132,8 @@ function save(){
                 if(note != false){
                     console.log(note, pitch);
                     final.beats[i].push(note+","+pitch)
+                } else {
+                    final.beats[i].push("");
                 }
             });
         }
