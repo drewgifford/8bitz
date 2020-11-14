@@ -1,0 +1,341 @@
+@font-face {
+    font-family: 'dos';
+    src: url('perfect_dos_vga_437_win-webfont.woff2') format('woff2'),
+         url('perfect_dos_vga_437_win-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    }
+
+    * {
+        font-family: "dos", monospace;
+        color: white;
+    }
+    body {
+        margin: 0;
+        background: black;
+        padding: 1em;
+        overflow-y: hidden;
+    }
+    h1,h2,h3,h4,h5,p {
+        margin: 0;
+    }
+    p {
+        font-size: 18px;
+        padding: 10px;
+        display: inline;
+    }
+    .fullContainer {
+        border-width: 10px;
+        border-color: white;
+        border-style: double;
+        height: calc(100vh - 4em);
+        padding: 1em;
+    }
+    .background {
+        background: #008080;
+    }
+    input[type="text"],input[type="number"]{
+        background: transparent;
+        font-size: 18px;
+        padding: 10px;
+        color: white;
+        border: none;
+        max-width: unset;
+        min-width: 500px;
+        outline: none;
+    }
+    .section {
+        border-bottom: 2px solid white;
+        padding-bottom: 1em;
+        margin-bottom: 1em;
+        position: relative;
+        
+    }
+    .section.vertical {
+        border-left: none;
+        border-right: none;
+        border-top: 2px solid white;
+        border-bottom: 2px solid white;
+    }
+    
+    .section.full {
+        border: 2px solid white;
+    }
+    .section.double:not(.vertical) {
+        border-style: double;
+    }
+    .section.vertical.double {
+        border-top: 2px double white;
+        border-bottom: 2px double white;
+    }
+    .label {
+        top: -0.75em;
+        left: 2em;
+        position: absolute;
+        background: black;
+        z-index: 1;
+    }
+    .instruments,.options {
+        padding: 3em 0em 2em 1em;
+        z-index: 5;
+        display: inline-block;
+    }
+    .layer {
+        padding: 1em;
+        border-bottom: 1px solid #808080;
+    }
+    .instruments p {
+        text-transform: uppercase;
+        background: #303000;
+        z-index: 5;
+        margin: 0 0.25em;
+        cursor: pointer;
+    }
+    .mute {
+        text-transform: uppercase;
+        cursor: pointer;
+        background: #808080;
+        color: white;
+        margin-left: 2em;
+    }
+    .instruments p.selected {
+        background-color: white !important;
+        color: black;
+    }
+    .layers,.music {
+        display: inline-block;
+        vertical-align:top;
+    }
+    .layers {
+        min-width: 300px;
+        border-right: 2px solid white;
+    }
+    
+    #square {
+        background: #800000;
+    }
+    #sawtooth {
+        background: #008000;
+    }
+    #sine {
+        background: #800080;
+    }
+    #triangle {
+        background: #000080;
+    }
+    #noise {
+        background: #808000;
+    }
+    #remove {
+        background: #ff0000;
+    }
+    .piano {
+        margin: 2em 1em;
+        padding: 1em;
+        border: 2px solid white;
+        display: inline-block;
+    }
+    .key {
+        text-align: center;
+        width: 60px;
+        background: white;
+        padding-top: 100px;
+        padding-bottom: 30px;
+        display: inline-block;
+        vertical-align: top;
+        z-index: 2;
+        position: relative;
+        cursor: pointer;
+        -webkit-touch-callout: none; /* iOS Safari */
+        -webkit-user-select: none; /* Safari */
+        -khtml-user-select: none; /* Konqueror HTML */
+        -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently */
+    }
+    .key:not(.after){
+        margin-left: 10px;
+    }
+    .key:not(.minor) p, .key:not(.minor) p span {
+        color: black;
+    }
+    .key.minor {
+        padding-top: 40px;
+        background: black;
+        width: 50px;
+        margin-left: -25px;
+        z-index: 300;
+    }
+    .key.after {
+        margin-left: -25px;
+    }
+
+    .key.selected {
+        background: #808080;
+    }
+
+    input[type="number"]{
+        min-width: unset;
+        width: 0.5em;
+    }
+    input[type="number"]#tempo {
+        width: 2em;
+    }
+    .octave {
+        text-align: center;
+        display: inline-block;
+        margin: 40px 20px 0px 20px;
+    }
+
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+        transform: rotate(90deg);
+        height: 80px;
+        opacity: 0;
+        display: none;
+    }
+    .increment {
+        cursor: pointer;
+        background: #008080;
+        display: inline-block;
+    }
+    .noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently */
+    }
+
+
+    /* SONG */
+    .layers {
+        display: grid;
+        grid-template-columns: 300px;
+        grid-auto-rows:60px;
+        
+    }
+    .layer {
+        grid-column: 1;
+        border-right: 3px solid white;
+    }
+    .measures {
+        grid-column-start: 2;
+        grid-row-start: 1;
+        grid-auto-columns: 60px;
+        display: flex;
+        position: relative;
+    }
+    .measure {
+        position: relative;
+        display: grid;
+        grid-template-columns: 60px 60px 60px 60px;
+        
+    }
+    .measureNumber {
+        position: absolute;
+        top: 0.5em;
+        transform: translateX(-50%);
+        background: black;
+        text-align: center;
+        padding: 0px;
+        z-index: 5;
+
+    }
+    .measure .beat {
+        display: grid;
+        grid-auto-rows: 60px;
+        z-index: 1;
+        
+    }
+    .note {
+        cursor: pointer;
+    }
+    .beat {
+        border-right: 1px solid #808080;
+    }
+    .measure > .beat:last-of-type{
+        border-right: 3px solid #fff;
+    }
+    .layers {
+        overflow-y: scroll;
+        overflow-x: hidden;
+    }
+    .measures {
+        overflow-x: scroll;
+        grid-row: 1/-1;
+    }
+
+    .note .fill {
+        margin: 7.5px;
+        height: calc(100% - 15px);
+        display: block;
+        position: relative;
+    }
+    .note .fill p {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+    }
+    .note.square .fill {
+        background: #800000;
+    }
+    .note.sawtooth .fill {
+        background: #008000;
+    }
+    .note.sine .fill {
+        background: #800080;
+    }
+    .note.triangle .fill {
+        background: #000080;
+    }
+    .note.noise .fill {
+        background: #808000;
+    }
+    #play {
+        background:#008000	;
+    }
+    #stop {
+        background: #808080;
+    }
+
+    .playMarker {
+        height: 100%;
+        width: 5px;
+        position: absolute;
+        background: white;
+        z-index: 9999;
+    }
+    .playMarker:not(.active){
+        display: none;
+    }
+    .options p {
+        cursor: pointer;
+    }
+    #pause {
+        background: #808080;
+    }
+
+
+    ::-webkit-scrollbar {
+        display: none;
+    }
+    /* Optional: show position indicator in red */
+    ::-webkit-scrollbar-thumb {
+        display: none;
+    }
+
+    .playMarker.active::after {
+        position: absolute;
+        content: "|||";
+        font-size: 12px;
+        text-align: center;
+        color: black;
+        width: 30px;
+        height: 1em;
+        top: 0;
+        left: -12.5px;
+        background: white;
+    }
