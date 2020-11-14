@@ -50,8 +50,21 @@
     initialize();
     
     
-    function playNote(type, frequency, duration, vol) {
+    function playNote(type, frequency, duration, pitch) {
+       
       // create Oscillator node
+
+      if(type == "noise"){
+            const noise = new Tone.NoiseSynth().toDestination();
+            //create a synth and connect it to the main output (your speakers)
+
+            
+            const now = Tone.now()
+            // ramp to "C2" over 2 seconds
+            // start the oscillator for 2 seconds
+            noise.triggerAttack(now-0.1, 0.75);
+            
+      } else {
     
     
       //SQUARE OSCILLATOR
@@ -75,6 +88,7 @@
             }, 30)
         }, duration);
         }
+    }
 
 var tempo = 160;
 var barWidth = 60;
@@ -85,7 +99,9 @@ var player = {
     measure: 1,
     beat: 1
 }
-
+$(document).click(function(){
+    Tone.start()
+});
 $("#play").click(function(){
     if(!player.active){
         player.active = true;
@@ -170,9 +186,13 @@ function processNote(){
 }
 
 function playNoteInPlayer(noteType, pitch){
+    if(noteType == "noise"){
+        playNote("noise", 0, 60000/tempo/4-10, pitch);
+        return;
+    }
     var n = Note.fromLatin(pitch);
     var freq = n.frequency();
-    playNote(noteType,freq,60000/tempo/4-10,5);
+    playNote(noteType,freq,60000/tempo/4-10,pitch);
 }
 
 function getNotes(measureNum, beatNum){

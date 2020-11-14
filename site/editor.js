@@ -35,6 +35,8 @@ $(".key").click(function(){
     playCurrentNote(50);
 
 
+
+
 });
 
 
@@ -66,7 +68,7 @@ $(".increment").click(function(){
 function playCurrentNote(length){
     var n = Note.fromLatin(selectedPitch+selectedOctave);
     var freq = n.frequency();
-    playNote(selectedNoteType,freq,length,5);
+    playNote(selectedNoteType,freq,length,selectedPitch+selectedOctave);
 }
 
 
@@ -81,6 +83,9 @@ $(".note").click(function(){
             $(this).html("");
         } else {
             $(this).attr("class","note "+type);
+            if(selectedNoteType == "noise"){
+                note = "N";
+            };
             $(this).html("<div class='fill'><p>"+note+"</p></div>");
             playCurrentNote(50);
         }
