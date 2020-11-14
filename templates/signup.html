@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Sign Up{% endblock %}
+
+{% block content %}
+<style>
+    #profilePicture {
+        display: none;
+    }
+</style>
+<div class="absoluteCenterContainer">
+    <div class="absoluteCenter">
+        <p class="bold title center">Sign Up</p>
+            <form action="#" method="POST" autocomplete="off">
+            <p>Email:</p>
+            <p><input type="text" name="em" /></p>
+            <p>Username:</p>
+            <p><input type="text" name="usr" /></p>
+            <p>Password:</p>
+            <p><input type="password" id="pass" name="pas" /></p>
+            <p>Confirm Password:</p>
+            <p><input type="password" name="pasc" id="confirmPass"/></p>
+            <p id="validate-status">Type in a password</p>
+            {% if invalid == True %}
+            <p class="errorMsg">Email already registered.</p>
+            {% endif %}
+            <p><input id="profilePicture" name="profilePicture" type="text" value="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" /></p>
+            <p><input id="submit" type="submit" value="Submit" disabled/></p>
+        </form>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function(){
+        $("#submit").prop("disabled",true);
+        $("#confirmPass").on("keyup", function(){
+            if(!($("#pass").val()===$("#confirmPass").val())){
+                $("#validate-status").html("Passwords do not match");
+                $("#submit").prop("disabled",true);
+            } else {
+                $("#validate-status").html("");
+                $("#submit").prop("disabled",false);
+            }
+        });
+
+    });
+
+
+
+
+</script>
+{% endblock %}
