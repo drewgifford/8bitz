@@ -82,7 +82,7 @@ def signup():
                 m['subject'] = "FiveBit Account Confirmation"
                 m.set_payload(f"Thank you for creating an account! Please confirm your account by clicking on this link: http://www.fivebit.xyz/confirm/{auth_token}")
                 server.sendmail("support@fivebit.xyz", f'{em}', m.as_string())
-
+                server.quit()
 
             return render_template('registered.html')
         else:
