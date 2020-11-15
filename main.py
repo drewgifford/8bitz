@@ -25,14 +25,23 @@ def home():
         return render_template("home.html")
     else:
         if "email" in session:
-            return render_template("home.html", data=result, email=session["email"], username=session["user"])
+            return render_template("home.html", data=result, email=session["email"], username=session["user"], account_id=session["account_id"])
         else:
             return render_template("home.html", data=result)
 
-@app.route("/editor")
-def editor():
+@app.route("/editor/<song_id>")
+def editor(song_id):
     if "email" in session:
-        return render_template("editor.html", email=session["email"], user=session["user"])
+        if int(song_id) == 0:
+            return render_template("editor.html", email=session["email"], user=session["user"], song_data='')
+        else:
+            db = sqlite3.connect('main.db')
+            cursor = db.cursor()
+            cursor.execute("SELECT * FROM song_data WHERE song_id = '{}'".format(song_id))
+            result = cursor.fetchone()
+            cursor.close()
+            db.close()
+            return render_template("editor.html", email=session["email"], user=session["user"], song_data=result)
     else:
         return redirect(url_for("home"))
 
@@ -70,9 +79,21 @@ def submit():
     else:
         return redirect(url_for("home"))
 
-@app.route("/account/")
-def account():
-    return render_template("account.html")
+@app.route("/account/<account_id>")
+def account(account_id):
+    db = sqlite3.connect('main.db')
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM account_details WHERE account_id = '{}'".format(account_id))
+    result = cursor.fetchone()
+    cursor.execute("SELECT * FROM song_data WHERE author_id = '{}'".format(account_id))
+    result1 = cursor.fetchall()
+    if "email" in session:
+        if str(session["email"]) == str(result[0]):
+            return render_template("account.html", data=result1, user_data=result, email=session["email"], username=session["user"], account_id=session["account_id"])
+        else:
+            return render_template("account.html", data=result1, user_data=result)
+    else:
+        return render_template("account.html", data=result1, user_data=result)
 
 @app.route("/login/", methods=["POST", "GET"])
 def login():
@@ -81,17 +102,17 @@ def login():
         pas = request.form['lpas']
         db = sqlite3.connect('main.db')
         cursor = db.cursor()
-        cursor.execute("SELECT email, username, password, verified FROM account_details WHERE email = '{}'".format(em))
+        cursor.execute("SELECT email, username, password, verified, account_id FROM account_details WHERE email = '{}'".format(em))
         result = cursor.fetchone()
-        pass_check = (cipher_suite.decrypt(result[2]))
         if result is None:
             return render_template("login.html", invalid=True)
-        elif bytes(pas, encoding='utf8') != pass_check:
+        elif bytes(pas, encoding='utf8') != cipher_suite.decrypt(result[2]):
             return render_template("login.html", invalid=True)
         else:
             if int(result[3]) == 1:
                 session["user"] = str(result[1])
                 session["email"] = str(result[0])
+                session["account_id"] = str(result[4])
                 return redirect(url_for("home"))
             else:
                 return render_template('need_confirmed.html')
@@ -123,6 +144,7 @@ def signup():
             db.commit()
             session["user"] = usr
             session["email"] = em
+            session["account_id"] = accountID
 
             context = ssl.create_default_context()
             with smtplib.SMTP_SSL("mail.privateemail.com", 465, context=context) as server:
@@ -143,9 +165,24 @@ def signup():
     else:
         return render_template("signup.html")
 
-@app.route("/change-password/")
-def change_password():
-    return render_template("pass_reset.html")
+@app.route("/account/changeUsername/", methods=["POST", "GET"])
+def changeUsername():
+    if request.method == "POST":
+        usr = request.form['newUsername']
+        pas = request.form['password']
+        db = sqlite3.connect('main.db')
+        cursor = db.cursor()
+        cursor.execute("SELECT email, username, password, verified, account_id FROM account_details WHERE email = '{}'".format(session["email"]))
+        result = cursor.fetchone()
+        if bytes(pas, encoding='utf8') != cipher_suite.decrypt(result[2]):
+            return render_template("account.html", invalid=True)
+        else:
+            sql = ("UPDATE song_data SET author = ? WHERE author_id = ?")
+            val = (usr, result[4])
+            cursor.execute(sql, val)
+            db.commit()
+            session["user"] = str(usr)
+            return redirect(url_for("home"))
 
 @app.route("/confirm/<token>")
 def confirm_email(token):

@@ -2,7 +2,7 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-
+{% if email%}
 <div class="section full">
     <p class="label">Account Settings</p>
     <div class="settings">
@@ -15,25 +15,23 @@
                 <input type="submit">
             </form>
         </div>
-        <div class="settingsBox">
-            <p class="label">Change Password</p>
-            <form action="/account/changePassword/" method="POST">
-                <br><br>
-                <input type="submit" value="Send Email">
-            </form>
-        </div>
     </div>
 </div>
+{% endif %}
 <div class="section full">
-    <p class="label">Toadally's Songs</p><br><br>
+    {% if email%}
+    <p class="label">Your Songs</p><br><br>
+    {% else %}
+    <p class="label">{{user_data[1]}}'s' Songs</p><br><br>
+    {% endif %}
     <div class="songs">
-        {% for result in data %}
+        {% for result1 in data %}
         <div class="song">
             <div class="song-wrapper"><br>
-                <p class="background">{{result[0]}}</p><br><br>
-                <p>by {{result[1]}}</p><br>
-                <p>{{result[2]}}</p><br><br><br>
-                <a class="buttonMenuPlay" href="/play/{{result[3]}}">[PLAY]</a><a class="buttonMenuCopy" href="/play/{{result[3]}}">[COPY]</a><br>&nbsp;
+                <p class="background">{{result1[0]}}</p><br><br>
+                <p>by {{result1[1]}}</p><br>
+                <p>{{result1[2]}}</p><br><br><br>
+                <a class="buttonMenuPlay" href="/play/{{result1[3]}}">[PLAY]</a><a class="buttonMenuCopy" href="/editor/{{result1[3]}}">[COPY]</a><br>&nbsp;
             </div>
         </div>
         {% endfor %}

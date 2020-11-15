@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Sign Up{% endblock %}
+
+{% block content %}
+<style>
+    #profilePicture {
+        display: none;
+    }
+</style>
+    <div class="section full">
+        <p class="label">An email has been sent to your registered email, please follow the steps there to reset your password.</p>
+            
+        </div>
+
+<script>
+    $(document).ready(function(){
+        $("#submit").prop("disabled",true);
+        $("#confirmPass").on("keyup", function(){
+            if(!($("#pass").val()===$("#confirmPass").val())){
+                $("#validate-status").html("Passwords do not match");
+                $("#submit").prop("disabled",true);
+            } else {
+                $("#validate-status").html("");
+                $("#submit").prop("disabled",false);
+            }
+        });
+
+    });
+</script>
+{% endblock %}

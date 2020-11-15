@@ -16,10 +16,10 @@
                         <p>[Home]</p>
                     </a>
                 {% if email%}
-                    <a class="newPlanet" href="/editor"> <!--New Song link-->
+                    <a class="newPlanet" href="/editor/0"> <!--New Song link-->
                         <p>[Create]</p>
                     </a>
-                    <a class="profile" href="/account"> <!--Profile page link-->
+                    <a class="profile" href="/account/{{account_id}}"> <!--Profile page link-->
                         <p>[{{username}}]</p>
                     </a>
                     <a class="logOut" href="/logout"> <!--Log out page link-->
