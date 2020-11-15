@@ -37,7 +37,7 @@
             const now = Tone.now()
             // ramp to "C2" over 2 seconds
             // start the oscillator for 2 seconds
-            noise.triggerAttack(now-0.1, 0.75);
+            noise.triggerAttack(now-0.1, 0.5);
             
       } else {
     
@@ -167,89 +167,89 @@ function getNotes(measureNum, beatNum){
 }
 
 
+function onReady(){
+    const slider = document.querySelector(".measures");
+    var initialX;
+    var finalX;
+    var canMove = true;
 
-const slider = document.querySelector(".measures");
-var initialX;
-var finalX;
-var canMove = true;
+    var movingMarker = false;
+    $(".playMarker").mousedown(function(){
+        if(isDown){ return }
+        movingMarker = true;
+    })
+    $(".playMarker").mouseup(function(){
+        movingMarker = false;
+    });
 
-var movingMarker = false;
-$(".playMarker").mousedown(function(){
-    if(isDown){ return }
-    movingMarker = true;
-})
-$(".playMarker").mouseup(function(){
-    movingMarker = false;
-});
-
-$(document).mousemove(function(evt){
-    
-    if(!movingMarker){ return }
-    var x = evt.pageX - $(".measures").offset().left+$(".measures").scrollLeft();
-    x = Math.round(x / 60)*60;
-    if(canMove){
-        $(".playMarker").css("left",x+"px");
-    }
-    var beats = x/60;
-    var remainder = beats % 4;
-    var measure = (beats - remainder)/4;
-    console.log("Measure: "+(measure+1));
-    console.log("Remainder: "+(remainder+1));
-    player.measure = measure+1;
-    player.beat = remainder+1;
-    player.xPosition = x;
-});
-
-document.addEventListener("mouseup", e => {
-    movingMarker = false;
-})
-
-slider.addEventListener("mousedown", e => {
-  if(movingMarker){return}
-  isDown = true;
-  slider.classList.add("active");
-  startX = e.pageX - slider.offsetLeft;
-  scrollLeft = slider.scrollLeft;
-
-  initialX = startX;
-});
-
-slider.addEventListener("mouseenter", () => {
-    canMove = true;
-})
-
-slider.addEventListener("mouseleave", () => {
-  isDown = false;
-  slider.classList.remove("active");
-  canMove = false;
-});
-slider.addEventListener("mouseup", e => {
-  finalX = e.pageX - slider.offsetLeft;
-
-  if(finalX != startX){
-    setTimeout(function(){
-        slider.classList.remove("active");
-  isDown = false;
-    }, 2)
-    
-    return;
-  }
-
-  slider.classList.remove("active");
-  isDown = false;
-  movingMarker = false;
-});
-slider.addEventListener("mousemove", e => {
-    if(movingMarker){
+    $(document).mousemove(function(evt){
         
-    }
-  if (!isDown) return;
-  e.preventDefault();
-  const x = e.pageX - slider.offsetLeft;
-  const walk = x - startX;
-  slider.scrollLeft = scrollLeft - walk;
-});
+        if(!movingMarker){ return }
+        var x = evt.pageX - $(".measures").offset().left+$(".measures").scrollLeft();
+        x = Math.round(x / 60)*60;
+        if(canMove){
+            $(".playMarker").css("left",x+"px");
+        }
+        var beats = x/60;
+        var remainder = beats % 4;
+        var measure = (beats - remainder)/4;
+        console.log("Measure: "+(measure+1));
+        console.log("Remainder: "+(remainder+1));
+        player.measure = measure+1;
+        player.beat = remainder+1;
+        player.xPosition = x;
+    });
 
+    document.addEventListener("mouseup", e => {
+        movingMarker = false;
+    })
+
+    slider.addEventListener("mousedown", e => {
+    if(movingMarker){return}
+    isDown = true;
+    slider.classList.add("active");
+    startX = e.pageX - slider.offsetLeft;
+    scrollLeft = slider.scrollLeft;
+
+    initialX = startX;
+    });
+
+    slider.addEventListener("mouseenter", () => {
+        canMove = true;
+    })
+
+    slider.addEventListener("mouseleave", () => {
+    isDown = false;
+    slider.classList.remove("active");
+    canMove = false;
+    });
+    slider.addEventListener("mouseup", e => {
+    finalX = e.pageX - slider.offsetLeft;
+
+    if(finalX != startX){
+        setTimeout(function(){
+            slider.classList.remove("active");
+    isDown = false;
+        }, 2)
+        
+        return;
+    }
+
+    slider.classList.remove("active");
+    isDown = false;
+    movingMarker = false;
+    });
+    slider.addEventListener("mousemove", e => {
+        if(movingMarker){
+            
+        }
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - slider.offsetLeft;
+    const walk = x - startX;
+    slider.scrollLeft = scrollLeft - walk;
+    });
+}
 
 
 
@@ -332,6 +332,9 @@ function initializeJson(json){
     }
 
     $(".measures").height(layers*60);
+    onReady();
+
+    
 }
 
 
@@ -368,4 +371,5 @@ function initialize(){
     }
 
     $(".measures").height(layers*60);
+    onReady();
 }
