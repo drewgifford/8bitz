@@ -155,7 +155,6 @@ function save(){
 
     });
     obj.measures = m;
-    
     $.ajax({
         type: "POST",
         contentType: "application/json;charset=utf-8",

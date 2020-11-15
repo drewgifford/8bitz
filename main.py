@@ -6,6 +6,7 @@ import smtplib, ssl
 from uuid import uuid4
 import email.message
 import datetime
+import json
 
 key = b'alerr8icGEY6tbt3qvLWg5hJU6C_BIeCIQ5_zZzwWOM='
 cipher_suite = Fernet(key)
@@ -49,7 +50,10 @@ def play(song_id):
 def submit():
     if "email" in session:
         if request.method == "POST":
-            print(request.json)
+
+            print(str(request.json))
+            request_json = json.loads(json.dumps(request.json))
+            print(request_json)
             db = sqlite3.connect('main.db')
             cursor = db.cursor()
             cursor.execute("SELECT * FROM account_details WHERE email = '{}'".format(session["email"]))
@@ -59,7 +63,7 @@ def submit():
             now = datetime.datetime.now()
             time = now.strftime("%m-%d-%Y")
             sql = ("INSERT INTO song_data(title, author, date_created, song_id, song_json, author_id) VALUES(?,?,?,?,?,?)")
-            val = (request.json['name'], session["user"], time, songID, request.json, result[4])
+            val = (str(request_json["name"]), str(session["user"]), str(time), str(songID), request.json, str(result[4]))
             cursor.execute(sql, val)
             db.commit()
             cursor.close()
@@ -68,7 +72,7 @@ def submit():
     else:
         return redirect(url_for("home"))
 
-@app.route("/login", methods=["POST", "GET"])
+@app.route("/login/", methods=["POST", "GET"])
 def login():
     if request.method == "POST":
         em = request.form['lem']
