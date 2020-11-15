@@ -160,7 +160,7 @@ function save(){
         contentType: "application/json;charset=utf-8",
         url: "/song/submit/",
         traditional: "true",
-        data: JSON.stringify(obj),
+        data: JSON.stringify(obj).replace("'", '"'),
         dataType: "json"
     });
 
