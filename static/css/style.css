@@ -1,7 +1,7 @@
 @font-face {
     font-family: 'dos';
-    src: url('perfect_dos_vga_437_win-webfont.woff2') format('woff2'),
-         url('perfect_dos_vga_437_win-webfont.woff') format('woff');
+    src: url('/static/font/perfect_dos_vga_437_win-webfont.woff2') format('woff2'),
+         url('/static/font/perfect_dos_vga_437_win-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
     }
@@ -34,7 +34,7 @@
     .background {
         background: #008080;
     }
-    input[type="text"],input[type="number"]{
+    input[type="text"],input[type="number"],input[type="password"]{
         background: transparent;
         font-size: 18px;
         padding: 10px;
@@ -43,6 +43,10 @@
         max-width: unset;
         min-width: 500px;
         outline: none;
+    }
+    form input[type="text"],input[type="password"]{
+        border-bottom: 1px solid white;
+        margin: 10px 0px;
     }
     .section {
         border-bottom: 2px solid white;
@@ -357,4 +361,50 @@
     left: -12.5px;
     background: white;
     z-index:99999;
+}
+
+a {
+    background: #808000;
+    text-decoration: none;
+    padding: 10px;
+    margin: 0px 10px;
+    font-size: 16px;
+}
+.logo {
+    display: inline-block;
+}
+.menu {
+    display: inline-block;
+}
+input[type="submit"]{
+    border-radius: 0px;
+    background: #008000;
+    font-size: 16px;
+    padding: 10px 20px;
+    cursor: pointer;
+    border: 0;
+    margin-bottom: 20px;
+}
+#validate-status {
+    color: red;
+}
+.songs {
+    display: flex;
+    height: 100%;
+    overflow-y: scroll;
+    padding: 1em;
+    flex-wrap: wrap;
+    
+}
+.song {
+    flex-basis: calc(25% - 2.25em);
+    align-content: center;
+    padding: 1em;
+    border: 2px solid white;
+    text-align: center;
+
+}
+.song-wrapper {
+    display: inline-block;
+    text-align: left;
 }

@@ -2,20 +2,22 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-<div class="absoluteCenterContainer">
-    <div class="absoluteCenter">
-        <p class="bold title center">Login</p>
+<div class="section full">
+    <p class="label">Log In</p><br><br>
         <form action="#" method="POST">
-            <label for="lem">Email</label>
-            <p><input type="text" id="lem" name="lem" /></p>
-            <label for="lpas">Password</label>
-            <p><input type="password" id="lpas" name="lpas" /></p>
+            <p>Email:</p>
+            <p><input type="text" id="lem" name="lem" /></p><br>
+            
+            <p>Password</p>
+            <p><input type="password" id="lpas" name="lpas" /></p><br><br>
+
             {% if invalid == True %}
-                <p class="errorMsg">Invalid credentials.</p>
+                <p class="errorMsg">Invalid credentials.</p><br><br>
             {% endif %}
+
             <p><input type="submit" value="Submit" /></p>
+
         </form>
         <a href="/signup">Register an Account &gt;</a>
-    </div>
 </div>
 {% endblock %}
