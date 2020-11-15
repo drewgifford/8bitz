@@ -95,6 +95,15 @@ function initialPlay(){
     //var scroll = $(".measures").scrollLeft(player.xPosition);
     play();
 }
+
+$("#volume").on("input", function(){
+    volume = $(this).val();
+    var v = Math.round(volume);
+    $("#volumeIndicator").html(v+"%");
+});
+
+
+
 function play(){
     processNote();
     setTimeout(function(){
@@ -273,6 +282,7 @@ function initializeJson(json){
         measureString = measureString + `<div class="note"></div>`
     }
     $(".layers").append('<div class="measures noselect"> <div class="playMarker"></div> </div>');
+    measures = json_measures;
     for(var i = 0; i < json_measures; i++){
 
 
