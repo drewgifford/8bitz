@@ -28,8 +28,8 @@
         {% for result1 in data %}
         <div class="song">
             <div class="song-wrapper"><br>
-                <p class="background">{{result1[0]}}</p><br><br>
-                <p>by {{result1[1]}}</p><br>
+                <p class="background blue">{{result1[0]}}</p><br><br>
+                <p style='display: block; padding-bottom: 0;'>by <a class="nostyle" href="/account/{{result1[5]}}">[{{result1[1]}}]</a></p><br>
                 <p>{{result1[2]}}</p><br><br><br>
                 <a class="buttonMenuPlay" href="/play/{{result1[3]}}">[PLAY]</a><a class="buttonMenuCopy" href="/editor/{{result1[3]}}">[COPY]</a><br>&nbsp;
             </div>

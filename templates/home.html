@@ -8,8 +8,8 @@
         {% for result in data %}
         <div class="song">
             <div class="song-wrapper"><br>
-                <p class="background">{{result[0]}}</p><br><br>
-                <p>by <a href="/account/{{result[5]}}">{{result[1]}}</a></p><br>
+                <p class="background blue">{{result[0]}}</p><br><br>
+                <p style='display: block; padding-bottom: 0;'>by <a class="nostyle" href="/account/{{result[5]}}">[{{result[1]}}]</a></p><br>
                 <p>{{result[2]}}</p><br><br><br>
                 <a class="buttonMenuPlay" href="/play/{{result[3]}}">[PLAY]</a><a class="buttonMenuCopy" href="/editor/{{result[3]}}">[COPY]</a><br>&nbsp;
             </div>

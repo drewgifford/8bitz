@@ -14,7 +14,7 @@
         margin: 0;
         background: black;
         padding: 1em;
-        overflow-y: hidden;
+
     }
     h1,h2,h3,h4,h5,p {
         margin: 0;
@@ -28,7 +28,7 @@
         border-width: 10px;
         border-color: white;
         border-style: double;
-        height: calc(100vh - 4em);
+        min-height: calc(100vh - 6em);
         padding: 1em;
     }
     .background {
@@ -362,18 +362,23 @@
     background: white;
     z-index:99999;
 }
-
 a {
+    text-decoration: none;
+}
+a:not(.nostyle) {
     background: #808000;
     text-decoration: none;
     padding: 10px;
     font-size: 18px;
 }
-a:not(.logo):not(#exit){
+a:not(.logo):not(#exit):not(.nostyle){
     margin: 0px 10px;
 }
 .logo {
     display: inline-block;
+}
+a.logo {
+    background: #008080;
 }
 .menu {
     display: inline-block;
@@ -421,10 +426,10 @@ input[type="submit"]{
     background: #800000;
 }
 
-.buttonMenuPlay {
+a.buttonMenuPlay {
     background: #008000;
 }
-.buttonMenuCopy {
+a.buttonMenuCopy {
     background: #808080;
 }
 .settings {
@@ -475,4 +480,10 @@ input[type=number] {
 }
 .mute {
     display: none;
+}
+a.nostyle {
+    background: none;
+}
+.background.blue {
+    background: #000080
 }
