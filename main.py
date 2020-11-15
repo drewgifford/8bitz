@@ -70,6 +70,10 @@ def submit():
     else:
         return redirect(url_for("home"))
 
+@app.route("/account/")
+def account():
+    return render_template("account.html")
+
 @app.route("/login/", methods=["POST", "GET"])
 def login():
     if request.method == "POST":

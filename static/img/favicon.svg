@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="540" height="540" viewBox="0 0 540 540">
+  <defs>
+    <clipPath id="clip-Artboard_3">
+      <rect width="540" height="540"/>
+    </clipPath>
+  </defs>
+  <g id="Artboard_3" data-name="Artboard – 3" clip-path="url(#clip-Artboard_3)">
+    <rect width="540" height="540"/>
+    <text id="_5" data-name="5" transform="translate(37.5 410.5)" fill="teal" font-size="455" font-family="PerfectDOSVGA437Win, 'Perfect DOS VGA 437 Win'"><tspan x="0" y="0">5</tspan></text>
+    <text id="bit" transform="translate(236.5 283.5)" fill="#fff" font-size="251" font-family="PerfectDOSVGA437Win, 'Perfect DOS VGA 437 Win'" letter-spacing="-0.251em"><tspan x="0" y="0">bit</tspan></text>
+  </g>
+</svg>
