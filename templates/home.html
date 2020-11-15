@@ -5,78 +5,16 @@
 <div class="section full">
     <p class="label">Recently Created Songs</p><br><br>
     <div class="songs">
+        {% for result in data %}
         <div class="song">
             <div class="song-wrapper">
-                <p>Perfect Song</p><br>
-                <p>by Toadally</p>
-                <a href="/play/SONG_ID/">Play</a><br><br>
-                <p>11/14/2020</p>
+                <p>{{result[0]}}</p><br>
+                <p>by {{result[1]}}</p>
+                <a href="/play/{{result[3]}}">Play</a><br><br>
+                <p>{{result[2]}}</p>
             </div>
         </div>
-
-        <div class="song">
-            <div class="song-wrapper">
-                <p>Perfect Song</p><br>
-                <p>by Toadally</p>
-                <a href="/play/SONG_ID/">Play</a><br><br>
-                <p>11/14/2020</p>
-            </div>
-        </div>
-
-        <div class="song">
-            <div class="song-wrapper">
-                <p>Perfect Song</p><br>
-                <p>by Toadally</p>
-                <a href="/play/SONG_ID/">Play</a><br><br>
-                <p>11/14/2020</p>
-            </div>
-        </div>
-
-        <div class="song">
-            <div class="song-wrapper">
-                <p>Perfect Song</p><br>
-                <p>by Toadally</p>
-                <a href="/play/SONG_ID/">Play</a><br><br>
-                <p>11/14/2020</p>
-            </div>
-        </div>
-
-        <div class="song">
-            <div class="song-wrapper">
-                <p>Perfect Song</p><br>
-                <p>by Toadally</p>
-                <a href="/play/SONG_ID/">Play</a><br><br>
-                <p>11/14/2020</p>
-            </div>
-        </div>
-
-        <div class="song">
-            <div class="song-wrapper">
-                <p>Perfect Song</p><br>
-                <p>by Toadally</p>
-                <a href="/play/SONG_ID/">Play</a><br><br>
-                <p>11/14/2020</p>
-            </div>
-        </div>
-
-        <div class="song">
-            <div class="song-wrapper">
-                <p>Perfect Song</p><br>
-                <p>by Toadally</p>
-                <a href="/play/SONG_ID/">Play</a><br><br>
-                <p>11/14/2020</p>
-            </div>
-        </div>
-
-        <div class="song">
-            <div class="song-wrapper">
-                <p>Perfect Song</p><br>
-                <p>by Toadally</p>
-                <a href="/play/SONG_ID/">Play</a><br><br>
-                <p>11/14/2020</p>
-            </div>
-        </div>
-
+        {% endfor %}
     </div>
 </div>
 {% endblock %}

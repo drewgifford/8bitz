@@ -10,7 +10,7 @@
         <div class="section">
             <p class="background">FiveBit Audio Synthesizer for Microsoft DOS</p>
 
-            <p>Song Name</p>
+            <p>{{song_data[0]}}</p>
         </div>
 
         <div class="section " style="margin-top: 2em">
@@ -43,7 +43,7 @@
 <script src="/static/js/player.js"></script>
 
 <script>
-    initializeJson(/* PUT JSON HERE */);
+    initializeJson(`{{song_data[4]|safe}}`);
 
 
 </script>

@@ -13,13 +13,19 @@ app = Flask(__name__)
 app.secret_key = 'Testing'
 @app.route("/")
 def home():
+    db = sqlite3.connect('main.db')
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM song_data")
+    result = cursor.fetchall()
+    cursor.close()
+    db.close()
     if request.method == "POST":
         return render_template("home.html")
     else:
         if "email" in session:
-            return render_template("home.html", email=session["email"], username=session["user"])
+            return render_template("home.html", data=result, email=session["email"], username=session["user"])
         else:
-            return render_template("home.html")
+            return render_template("home.html", data=result)
 
 @app.route("/editor")
 def editor():
@@ -34,10 +40,15 @@ def editor():
         else:
             return redirect("/login/")
 
-@app.route("/play/")
-def play():
-    # idk what to do here
-    return render_template("player.html")
+@app.route("/play/<song_id>")
+def play(song_id):
+    db = sqlite3.connect('main.db')
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM song_data WHERE song_id = '{}'".format(song_id))
+    result = cursor.fetchone()
+    cursor.close()
+    db.close()
+    return render_template("player.html", song_data=result)
 
 @app.route("/login/", methods=["POST", "GET"])
 def login():
