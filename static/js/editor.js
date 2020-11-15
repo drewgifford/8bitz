@@ -154,6 +154,9 @@ function save(){
 
     });
     obj.measures = m;
+
+    download(JSON.stringify(obj), obj.name+'.txt', 'text/plain');
+    /*
     $.ajax({
         type: "POST",
         contentType: "application/json;charset=utf-8",
@@ -167,9 +170,9 @@ function save(){
         error: function(error) {
             window.location.replace("/");
         }
-    });
+    });*/
 
-    //download(JSON.stringify(obj), obj.name+'.5bit', 'text/plain');
+    
 
 
 

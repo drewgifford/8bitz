@@ -59,7 +59,9 @@
         oscillator.start();
     
         gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime+(duration/1050) - 0.001);
-
+        setTimeout(function(){
+            oscillator.stop();
+        },duration+10);
 }
     
 
