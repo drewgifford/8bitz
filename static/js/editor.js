@@ -158,13 +158,11 @@ function save(){
     
     $.ajax({
         type: "POST",
+        contentType: "application/json;charset=utf-8",
         url: "/song/submit/",
-        dataType: "json",
-        async: false,
+        traditional: "true",
         data: JSON.stringify(obj),
-        success: function(){
-            alert("it worked!");
-        }
+        dataType: "json"
     });
 
     //download(JSON.stringify(obj), obj.name+'.5bit', 'text/plain');
