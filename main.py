@@ -50,9 +50,9 @@ def play(song_id):
 def submit():
     if "email" in session:
         if request.method == "POST":
-
-            print(str(request.json))
             request_json = json.loads(json.dumps(request.json))
+            print(request.json)
+            print('Break')
             print(request_json)
             db = sqlite3.connect('main.db')
             cursor = db.cursor()
@@ -63,7 +63,7 @@ def submit():
             now = datetime.datetime.now()
             time = now.strftime("%m-%d-%Y")
             sql = ("INSERT INTO song_data(title, author, date_created, song_id, song_json, author_id) VALUES(?,?,?,?,?,?)")
-            val = (str(request_json["name"]), str(session["user"]), str(time), str(songID), request.json, str(result[4]))
+            val = (str(request_json["name"]), str(session["user"]), str(time), str(songID), request.data, str(result[4]))
             cursor.execute(sql, val)
             db.commit()
             cursor.close()
@@ -140,6 +140,10 @@ def signup():
         db.close()
     else:
         return render_template("signup.html")
+
+@app.route("/change-password/")
+def change_password():
+    return render_template("pass_reset.html")
 
 @app.route("/confirm/<token>")
 def confirm_email(token):

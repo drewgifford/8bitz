@@ -10,22 +10,16 @@
     <div class="section full">
         <p class="label">Sign Up</p>
             <form action="#" method="POST" autocomplete="off"><br><br>
-                <p>Email:</p>
-                <p><input type="text" name="em" /></p><br>
+                <p>Old Password</p>
+                <p><input type="password" name="em" /></p><br>
 
-                <p>Username:</p>
-                <p><input type="text" name="usr" /></p><br>
-
-                <p>Password:</p>
+                <p>New Password:</p>
                 <p><input type="password" id="pass" name="pas" /></p><br>
 
                 <p>Confirm Password:</p>
                 <p><input type="password" name="pasc" id="confirmPass"/></p><br><br>
 
                 <p id="validate-status">Type in a password</p><br><br>
-                {% if invalid == True %}
-                <p class="errorMsg">Email already registered.</p>
-                {% endif %}
                 <p><input id="profilePicture" name="profilePicture" type="text" value="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" /></p><br><br>
                 <p><input id="submit" type="submit" value="Submit" disabled/></p>
             </form>

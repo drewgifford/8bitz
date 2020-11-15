@@ -43,7 +43,7 @@
 <script src="/static/js/player.js"></script>
 
 <script>
-    initializeJson(`{{song_data[4]|safe}}`);
+    initializeJson(`{{song_data[4]|safe}}`.replace("b'", '').replace("'", ''));
 
 
 </script>
