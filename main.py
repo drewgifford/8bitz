@@ -90,10 +90,10 @@ def signup():
             session["email"] = em
 
             context = ssl.create_default_context()
-            print(usr, em)
             with smtplib.SMTP_SSL("mail.privateemail.com", 465, context=context) as server:
                 server.login("support@fivebit.xyz", "4gqkeawg")
                 m = email.message.Message()
+                m['from'] = "FiveBit Support <support@fivebit.xyz>"
                 m['to'] = str(em)
                 m['subject'] = "FiveBit Account Confirmation"
                 m.set_payload(f"Thank you for creating an account! Please confirm your account by clicking on this link: http://www.fivebit.xyz/confirm/{auth_token}")
