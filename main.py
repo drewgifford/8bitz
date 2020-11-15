@@ -184,10 +184,6 @@ def changeUsername():
             session["user"] = str(usr)
             return redirect(url_for("home"))
 
-@app.route("/change-password/")
-def change_password():
-    return render_template("pass_reset.html")
-
 @app.route("/confirm/<token>")
 def confirm_email(token):
     db = sqlite3.connect('main.db')
