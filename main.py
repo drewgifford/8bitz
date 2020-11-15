@@ -17,7 +17,7 @@ app.secret_key = 'Testing'
 def home():
     db = sqlite3.connect('main.db')
     cursor = db.cursor()
-    cursor.execute("SELECT * FROM song_data")
+    cursor.execute("SELECT * FROM song_data ORDER BY date_created DESC")
     result = cursor.fetchall()
     cursor.close()
     db.close()
@@ -66,7 +66,7 @@ def submit():
             result = cursor.fetchone()
             songID = random.randint(1111,9999)
             now = datetime.datetime.now()
-            time = now.strftime("%m-%d-%Y")
+            time = now.strftime("%m-%d-%Y %H:%M")
             sql = ("INSERT INTO song_data(title, author, date_created, song_id, song_json, author_id) VALUES(?,?,?,?,?,?)")
             val = (str(request_json["name"]), str(session["user"]), str(time), str(songID), request.data, str(result[4]))
             cursor.execute(sql, val)
