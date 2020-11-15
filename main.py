@@ -8,11 +8,11 @@ import email.message
 import datetime
 import json
 
-key = b'alerr8icGEY6tbt3qvLWg5hJU6C_BIeCIQ5_zZzwWOM='
+key = "Key go here"
 cipher_suite = Fernet(key)
 
 app = Flask(__name__)
-app.secret_key = 'Testing'
+app.secret_key = 'Yup'
 @app.route("/")
 def home():
     db = sqlite3.connect('main.db')
@@ -147,8 +147,8 @@ def signup():
             session["account_id"] = accountID
 
             context = ssl.create_default_context()
-            with smtplib.SMTP_SSL("mail.privateemail.com", 465, context=context) as server:
-                server.login("support@fivebit.xyz", "4gqkeawg")
+            with smtplib.SMTP_SSL(lol no) as server:
+                server.login(also no)
                 m = email.message.Message()
                 m['from'] = "FiveBit Support <support@fivebit.xyz>"
                 m['to'] = str(em)
