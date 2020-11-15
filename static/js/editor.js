@@ -109,7 +109,6 @@ $(".measures").on("click", ".note", function(){
 });
 
 
-
 function save(){
 
     var obj = {};
@@ -161,7 +160,13 @@ function save(){
         url: "/song/submit/",
         traditional: "true",
         data: JSON.stringify(obj).replace("'", '"'),
-        dataType: "json"
+        dataType: "json",
+        success: function(response) {
+            window.location.replace("/");
+        },
+        error: function(error) {
+            window.location.replace("/");
+        }
     });
 
     //download(JSON.stringify(obj), obj.name+'.5bit', 'text/plain');
