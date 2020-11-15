@@ -23,6 +23,7 @@ def home():
 
 @app.route("/editor")
 def editor():
+    return render_template("editor.html")
     if request.method == "POST":
         # Probably want to handle creation of songs here
         return render_template("editor.html")
