@@ -5,6 +5,7 @@ import random
 import smtplib, ssl
 from uuid import uuid4
 import email.message
+import datetime
 
 key = b'alerr8icGEY6tbt3qvLWg5hJU6C_BIeCIQ5_zZzwWOM='
 cipher_suite = Fernet(key)
@@ -13,33 +14,59 @@ app = Flask(__name__)
 app.secret_key = 'Testing'
 @app.route("/")
 def home():
+    db = sqlite3.connect('main.db')
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM song_data")
+    result = cursor.fetchall()
+    cursor.close()
+    db.close()
     if request.method == "POST":
         return render_template("home.html")
     else:
         if "email" in session:
-            return render_template("home.html", email=session["email"], username=session["user"])
+            return render_template("home.html", data=result, email=session["email"], username=session["user"])
         else:
-            return render_template("home.html")
+            return render_template("home.html", data=result)
 
 @app.route("/editor")
 def editor():
-    return render_template("editor.html")
-    if request.method == "POST":
-        # Probably want to handle creation of songs here
-        return render_template("editor.html")
-        
+    if "email" in session:
+        return render_template("editor.html", email=session["email"], user=session["user"])
     else:
-        if "email" in session:
-            return render_template("editor.html", email=session["email"], username=session["user"])
-        else:
-            return redirect("/login/")
+        return redirect(url_for("home"))
 
-@app.route("/play/")
-def play():
-    # idk what to do here
-    return render_template("player.html")
+@app.route("/play/<song_id>")
+def play(song_id):
+    db = sqlite3.connect('main.db')
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM song_data WHERE song_id = '{}'".format(song_id))
+    result = cursor.fetchone()
+    cursor.close()
+    db.close()
+    return render_template("player.html", song_data=result)
 
-@app.route("/login/", methods=["POST", "GET"])
+@app.route("/song/submit")
+def submit():
+    if "email" in session:
+        if request.method == "POST":
+            db = sqlite3.connect('main.db')
+            cursor = db.cursor()
+            cursor.execute("SELECT * FROM account_details WHERE email = '{}'".format(session["email"]))
+            result = cursor.fetchone()
+            songID = random.randint(1111,9999)
+            now = datetime.datetime.now()
+            time = now.strftime("%m-%d-%Y")
+            sql = ("INSERT INTO song_data(title, author, date_created, song_id, song_json, author_id) VALUES(?,?,?,?,?,?)")
+            val = (request.json['name'], session["user"], time, songID, request.json, result[5])
+            cursor.execute(sql, val)
+            db.commit()
+            cursor.close()
+            db.close()
+            return redirect(url_for("home"))
+    else:
+        return redirect(url_for("home"))
+
+@app.route("/login", methods=["POST", "GET"])
 def login():
     if request.method == "POST":
         em = request.form['lem']

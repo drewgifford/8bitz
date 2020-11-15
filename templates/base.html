@@ -12,13 +12,13 @@
                 <a href="/" class="background logo">FiveBit Audio Synthesizer for Microsoft DOS</a>
     
                 <div class="menu">
-                    <a class="newPlanet" href="/"> <!--New Planet link-->
+                    <a class="newPlanet" href="/"> <!--Home link-->
                         <p>[Home]</p>
                     </a>
-                    <a class="newPlanet" href="/editor"> <!--New Planet link-->
+                {% if email%}
+                    <a class="newPlanet" href="/editor"> <!--New Song link-->
                         <p>[Create]</p>
                     </a>
-                {% if email%}
                     <a class="profile" href="/account"> <!--Profile page link-->
                         <p>[{{username}}]</p>
                     </a>
