@@ -40,8 +40,15 @@
             noise.triggerAttack(now-0.1, 0.5);
             
       } else {
+
+            const synth = new Tone.Oscillator(frequency, type).toDestination();
+
+            const now = Tone.now();
+            synth.start();
+            return;
+      }
     
-    
+      /*
       //SQUARE OSCILLATOR
         var oscillator = audioCtx.createOscillator();
         oscillator.type = type;
@@ -62,8 +69,9 @@
                 oscillator.stop();
             }, 30)
         }, duration);
-        }
-    }
+    */
+}
+    
 
 
 $(document).click(function(){
