@@ -51,14 +51,10 @@ def submit():
     if "email" in session:
         if request.method == "POST":
             request_json = json.loads(json.dumps(request.json))
-            print(request.json)
-            print('Break')
-            print(request_json)
             db = sqlite3.connect('main.db')
             cursor = db.cursor()
             cursor.execute("SELECT * FROM account_details WHERE email = '{}'".format(session["email"]))
             result = cursor.fetchone()
-            print(result[4])
             songID = random.randint(1111,9999)
             now = datetime.datetime.now()
             time = now.strftime("%m-%d-%Y")
@@ -68,6 +64,8 @@ def submit():
             db.commit()
             cursor.close()
             db.close()
+
+            print("I made it this far!")
             return redirect(url_for("home"))
     else:
         return redirect(url_for("home"))

@@ -12,7 +12,7 @@
     let startX;
     let scrollLeft;
     var b = 0;
-    var tempo = 160;
+    var tempo;
     var barWidth = 60;
     var volume = 50;
     var player = {
@@ -262,13 +262,16 @@ function initializeJson(json){
     $(".layers").html("");
     
     json = JSON.parse(json);
-    var json_tempo = json.tempo;
+    var json_tempo = parseInt(json.tempo);
     var json_name = json.name;
     var json_measures = json.measures.length;
     var json_layers = 6;
 
+
+
     $("#name").val(json_name);
     $("#tempo").val(json_tempo);
+    $("#tempoIndicator").html(json_tempo);
     tempo = json_tempo;
 
     var json_measures_object = json.measures;
@@ -343,6 +346,7 @@ function initializeJson(json){
 
 
 function initialize(){
+    tempo = 120;
     var measureString = "";
     for(var i =0; i < layers; i++){
         $(".layers").append(`

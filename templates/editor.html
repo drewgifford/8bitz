@@ -9,7 +9,7 @@
 
     <div class="fullContainer">
         <div class="section">
-            <p class="background">FiveBit Audio Synthesizer for Microsoft DOS</p>
+            <a href="/" class="logo background">FiveBit Audio Synthesizer for Microsoft DOS</a>
 
             <p><input type="text" id="name" placeholder="Click to edit song name" maxlength=24></p>
         </div>
@@ -84,8 +84,9 @@
 
                     <p id="play">Play</p>
                     <p id="pause">Pause</p>
-                    <p id="stop">Stop</p>
+                    <p id="stop">Reset</p>
                     <p id="save">Save and Exit</p>
+                    <a href="/" id="exit">Exit</a>
                 </div>
 
                 
@@ -111,6 +112,13 @@
 <script defer src="/static/js/editor.js"></script>
 
 <script>
-    initialize();
+
+    const j = "json here";
+    var usingJson = false; // Change this
+    if(usingJson){
+        initializeJson(j);
+    } else {
+        initialize();
+    }
 </script>
 </body>

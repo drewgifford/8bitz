@@ -8,7 +8,7 @@
 
     <div class="fullContainer">
         <div class="section">
-            <p class="background">FiveBit Audio Synthesizer for Microsoft DOS</p>
+            <a href="/" class="logo background">FiveBit Audio Synthesizer for Microsoft DOS</a>
 
             <p>{{song_data[0]}}</p>
         </div>
@@ -16,7 +16,7 @@
         <div class="section " style="margin-top: 2em">
             <div class="section">
                 <div class="options">
-                    <p class="tempo">Tempo: 128</p>
+                    <p class="tempo">Tempo: <span id="tempoIndicator">128</span></p>
 
                     <p id="play">Play</p>
                     <p id="pause">Pause</p>
@@ -33,7 +33,9 @@
                 
                 
             </div>
+            <p class="volume">Volume:<input type="range" min="0" max="100" value="50" class="slider" id="volume"> <span id="volumeIndicator">50%</span></p>
         </div>
+        
 
 
     </div>
