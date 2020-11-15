@@ -45,19 +45,21 @@ def play(song_id):
     db.close()
     return render_template("player.html", song_data=result)
 
-@app.route("/song/submit")
+@app.route("/song/submit/", methods=["POST", "GET"])
 def submit():
     if "email" in session:
         if request.method == "POST":
+            print(request.json)
             db = sqlite3.connect('main.db')
             cursor = db.cursor()
             cursor.execute("SELECT * FROM account_details WHERE email = '{}'".format(session["email"]))
             result = cursor.fetchone()
+            print(result[4])
             songID = random.randint(1111,9999)
             now = datetime.datetime.now()
             time = now.strftime("%m-%d-%Y")
             sql = ("INSERT INTO song_data(title, author, date_created, song_id, song_json, author_id) VALUES(?,?,?,?,?,?)")
-            val = (request.json['name'], session["user"], time, songID, request.json, result[5])
+            val = (request.json['name'], session["user"], time, songID, request.json, result[4])
             cursor.execute(sql, val)
             db.commit()
             cursor.close()
