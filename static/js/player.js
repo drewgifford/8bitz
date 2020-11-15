@@ -40,13 +40,10 @@
             noise.triggerAttack(now-0.1, 0.5);
             
       } else {
-
-            const synth = new Tone.Oscillator(frequency, type).toDestination();
-
-            const now = Tone.now();
-            synth.start();
-            return;
+            
+        
       }
+      return;
     
       /*
       //SQUARE OSCILLATOR
