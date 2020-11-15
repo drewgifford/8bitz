@@ -427,6 +427,16 @@ input[type="submit"]{
 .buttonMenuCopy {
     background: #808080;
 }
+.settings {
+    display: flex;
+}
+.settingsBox {
+    min-width: 250px;
+    position: relative;
+    margin: 2em 2em;
+    padding: 1em;
+    border: 2px solid white;
+}
 
 /* The slider itself */
 .slider {
