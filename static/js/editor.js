@@ -93,9 +93,7 @@ $(".measures").on("click", ".note", function(){
             
             var measure = $(this).parent().parent().attr("id").split("-")[1];
             if(measure >= measures-4){
-                console.log(measures);
                 var diff = measures-measure;
-                console.log(diff);
             }
             
 
@@ -104,7 +102,6 @@ $(".measures").on("click", ".note", function(){
                 $("#measure-"+(measures+1)+" .beat").html(`<div class='note'><div class='fill'></div></div><div class='note'><div class='fill'></div></div><div class='note'><div class='fill'></div></div><div class='note'><div class='fill'></div></div><div class='note'><div class='fill'></div></div><div class='note'><div class='fill'></div></div>`)
                 measures = measures+1;
             }
-            console.log(measures);
             
         }
     }
@@ -124,6 +121,7 @@ function save(){
 
     var m = [];
     var measures = $(".measure");
+
     measures.each(function(e){
         var measure = $(measures[e]);
         var final = {
@@ -138,8 +136,6 @@ function save(){
             notes.each(function(t){
                 var pitch = $(notes[t]).find("p").html();
 
-                console.log($(notes[t]).hasClass("square"));
-
                 var note = false;
                 var n = $(notes[t]);
                 if(n.hasClass("square")){ note = "square"}
@@ -149,7 +145,6 @@ function save(){
                 else if(n.hasClass("noise")){ note = "noise"}
 
                 if(note != false){
-                    console.log(note, pitch);
                     final.beats[i].push(note+","+pitch)
                 } else {
                     final.beats[i].push("");
@@ -160,8 +155,19 @@ function save(){
 
     });
     obj.measures = m;
-    console.log(obj);
-    download(JSON.stringify(obj), obj.name+'.5bit', 'text/plain');
+    
+    $.ajax({
+        type: "POST",
+        url: "/song/submit/",
+        dataType: "json",
+        async: false,
+        data: JSON.stringify(obj),
+        success: function(){
+            alert("it worked!");
+        }
+    });
+
+    //download(JSON.stringify(obj), obj.name+'.5bit', 'text/plain');
 
 
 
