@@ -50,7 +50,7 @@ def play(song_id):
 def submit():
     if "email" in session:
         if request.method == "POST":
-
+            print(request.data)
             print(str(request.json))
             request_json = json.loads(json.dumps(request.json))
             print(request_json)
