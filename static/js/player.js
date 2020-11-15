@@ -45,7 +45,7 @@
       }
       return;
     
-    
+      /*
       //SQUARE OSCILLATOR
         var oscillator = audioCtx.createOscillator();
         oscillator.type = type;
@@ -66,8 +66,9 @@
                 oscillator.stop();
             }, 30)
         }, duration);
-        }
-    }
+    */
+}
+    
 
 
 $(document).click(function(){
