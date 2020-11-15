@@ -14,7 +14,7 @@
     var b = 0;
     var tempo = 160;
     var barWidth = 60;
-
+    var volume = 50;
     var player = {
         active: false,
         xPosition: 0,
@@ -26,6 +26,9 @@
     
     
     function playNote(type, frequency, duration, pitch) {
+      if(type=="remove"){
+          frequency = 130.8127826502993
+      }
        
       // create Oscillator node
 
@@ -37,11 +40,9 @@
             const now = Tone.now()
             // ramp to "C2" over 2 seconds
             // start the oscillator for 2 seconds
-            noise.triggerAttack(now-0.1, 0.5);
-            
-      } else {
-    
-    
+            noise.triggerAttack(now-0.1, volume/200);
+            return;
+      }
       //SQUARE OSCILLATOR
         var oscillator = audioCtx.createOscillator();
         oscillator.type = type;
@@ -50,20 +51,17 @@
     
         oscillator.connect(gainNode);
         gainNode.connect(audioCtx.destination);
+
+        gainNode.gain.setValueAtTime(0,audioCtx.currentTime);
+
+        gainNode.gain.linearRampToValueAtTime(volume/100, audioCtx.currentTime + 0.001);
         
         oscillator.start();
     
+        gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime+(duration/1050) - 0.001);
+
+}
     
-      setTimeout(
-        function() {
-            gainNode.gain.setValueAtTime(gainNode.gain.value, audioCtx.currentTime); 
-            gainNode.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.1);
-            setTimeout(function(){
-                oscillator.stop();
-            }, 30)
-        }, duration);
-        }
-    }
 
 
 $(document).click(function(){
@@ -106,8 +104,7 @@ function play(){
         var scroll = $(".measures").scrollLeft();
 
         var width = $(".measures").width();
-        console.log(player.xPosition-scroll);
-        console.log(width);
+
         if(Math.abs(player.xPosition - scroll) > width){
             
             $(".measures").scrollLeft(player.xPosition);
@@ -154,12 +151,12 @@ function processNote(){
 
 function playNoteInPlayer(noteType, pitch){
     if(noteType == "noise"){
-        playNote("noise", 0, 60000/tempo/4-10, pitch);
+        playNote("noise", 0, 60000/tempo/4, pitch);
         return;
     }
     var n = Note.fromLatin(pitch);
     var freq = n.frequency();
-    playNote(noteType,freq,60000/tempo/4-10,pitch);
+    playNote(noteType,freq,60000/tempo/4,pitch);
 }
 
 function getNotes(measureNum, beatNum){
@@ -193,8 +190,7 @@ function onReady(){
         var beats = x/60;
         var remainder = beats % 4;
         var measure = (beats - remainder)/4;
-        console.log("Measure: "+(measure+1));
-        console.log("Remainder: "+(remainder+1));
+
         player.measure = measure+1;
         player.beat = remainder+1;
         player.xPosition = x;
@@ -267,7 +263,6 @@ function initializeJson(json){
     tempo = json_tempo;
 
     var json_measures_object = json.measures;
-    console.log(json);
 
     var measureString = "";
     for(var i =0; i < json_layers; i++){
@@ -305,7 +300,6 @@ function initializeJson(json){
                     if (currentNote === undefined || currentNote.length == 0){
                         $(str).append("<div class='note'> <div class='fill'></div></div>");
                     } else {
-                        console.log(currentNote);
                         var bType = currentNote.split(",")[0];
                         var bPitch  = currentNote.split(",")[1];
                         $(str).append("<div class='note "+bType+"'> <div class='fill'><p>"+bPitch+"</p></div></div>");

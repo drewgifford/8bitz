@@ -74,7 +74,7 @@ function playCurrentNote(length){
 
 // Add notes
 
-$(".note").click(function(){
+$(".measures").on("click", ".note", function(){
     if(!isDown){
         var note = selectedPitch+selectedOctave;
         var type = selectedNoteType;
@@ -88,6 +88,24 @@ $(".note").click(function(){
             };
             $(this).html("<div class='fill'><p>"+note+"</p></div>");
             playCurrentNote(50);
+
+
+            
+            var measure = $(this).parent().parent().attr("id").split("-")[1];
+            if(measure >= measures-4){
+                console.log(measures);
+                var diff = measures-measure;
+                console.log(diff);
+            }
+            
+
+            for(var i = 0; i < (4-diff); i++){
+                $(".measures").append("<div class='measure' id='measure-"+(measures+1)+"'><p class='measureNumber'>"+(measures+1)+"</p><div class='beat'></div><div class='beat'></div><div class='beat'></div><div class='beat'></div></div>");
+                $("#measure-"+(measures+1)+" .beat").html(`<div class='note'><div class='fill'></div></div><div class='note'><div class='fill'></div></div><div class='note'><div class='fill'></div></div><div class='note'><div class='fill'></div></div><div class='note'><div class='fill'></div></div><div class='note'><div class='fill'></div></div>`)
+                measures = measures+1;
+            }
+            console.log(measures);
+            
         }
     }
 
