@@ -1,58 +1,51 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Stellar Skies - {% block title %}{% endblock %}</title>
-        <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100;700&display=swap" rel="stylesheet"> 
-        <link href="/static/css/index.css" rel="stylesheet">
-        <link href="/static/css/form.css" rel="stylesheet">
-        <script src="https://kit.fontawesome.com/841ee7423a.js" crossorigin="anonymous"></script>
+        <title>FiveBit Synth - {% block title %}{% endblock %}</title>
+        <link href="/static/css/style.css" rel="stylesheet">
         <link rel="icon" href="/static/img/favicon.svg">
     </head>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <body>
-        <div class="navbar">
-            <a href="/">
-                <div class="logoGroup">
-
-                    <img src="/static/img/logo.svg">
-                    <p>FiveBit Audio Synthesizer</p>
+        <div class="fullContainer">
+            <div class="section">
+                <a href="/" class="background logo">FiveBit Audio Synthesizer for Microsoft DOS</a>
+    
+                <div class="menu">
+                    <a class="newPlanet" href="/"> <!--New Planet link-->
+                        <p>[Home]</p>
+                    </a>
+                    <a class="newPlanet" href="/editor"> <!--New Planet link-->
+                        <p>[Create]</p>
+                    </a>
+                {% if email%}
+                    <a class="profile" href="/account"> <!--Profile page link-->
+                        <p>[{{username}}]</p>
+                    </a>
+                    <a class="logOut" href="/logout"> <!--Log out page link-->
+                        <p>[Sign Out]</p>
+                    </a>
+                {% else %}
+                    <a class="logIn" href="/login" >  <!--Log in page link-->
+                        <p>[Log In]</p>
+                    </a>
+        
+                    <a class="register" href="/signup"> <!--Register page link-->
+                        <p>[Register]</p>
+                    </a>
+                {% endif %}
+                </div>
+            </div>
+    
+            <div class="section " style="margin-top: 2em">
+                <div class="content">
+                    {% block content %}{% endblock %}
                 </div>
 
-            </a>
-            <div class="accountGroup">
-            {% if email%}
-                <a class="profile" href="/account"> <!--Profile page link-->
-                    <p><i class="fas fa-user"></i> {{username}}</p>
-                </a>
-                <a class="logOut" href="/logout"> <!--Log out page link-->
-                    <p><i class="fas fa-sign-out-alt"></i> Sign Out</p>
-                </a>
-            {% else %}
-                <a class="newPlanet" href="/login"> <!--New Planet link-->
-                    <p><i class="far fa-plus-square"></i> New Planet</p>
-                </a>
-                <a class="about" href="/about"> <!--About link-->
-                    <p><i class="fas fa-question"></i> About</p>
-                </a>
-                <a class="logIn" href="/login" >  <!--Log in page link-->
-                    <p><i class="fas fa-sign-in-alt"></i> Log In</p>
-                </a>
-    
-                <a class="register" href="/signup"> <!--Register page link-->
-                    <p><i class="fas fa-user-check"></i> Register</p>
-                </a>
-            {% endif %}
-            </div>
-    
-        </div>
-        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-        
-        <div class="container">
-            <div class="content">
-                {% block content %}{% endblock %}
-            </div>
-        </div>
 
-        <canvas id="space"></canvas>
-        <script src="/static/js/stars.js"></script>
+            </div>
+    
+        </div>
+        
     </body>
 </html>

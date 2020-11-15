@@ -102,6 +102,7 @@ function save(){
 
     obj.name = $("#name").val();
     if(obj.name == ""){ obj.name = "Untitled Song"}
+    obj.tempo = $("#tempo").val();
 
     var m = [];
     var measures = $(".measure");

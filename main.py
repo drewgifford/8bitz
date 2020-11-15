@@ -11,7 +11,6 @@ cipher_suite = Fernet(key)
 
 app = Flask(__name__)
 app.secret_key = 'Testing'
-
 @app.route("/")
 def home():
     if request.method == "POST":
@@ -21,6 +20,24 @@ def home():
             return render_template("home.html", email=session["email"], username=session["user"])
         else:
             return render_template("home.html")
+
+@app.route("/editor")
+def editor():
+    return render_template("editor.html")
+    if request.method == "POST":
+        # Probably want to handle creation of songs here
+        return render_template("editor.html")
+        
+    else:
+        if "email" in session:
+            return render_template("editor.html", email=session["email"], username=session["user"])
+        else:
+            return redirect("/login/")
+
+@app.route("/play/")
+def play():
+    # idk what to do here
+    return render_template("player.html")
 
 @app.route("/login/", methods=["POST", "GET"])
 def login():
@@ -77,7 +94,6 @@ def signup():
             with smtplib.SMTP_SSL("mail.privateemail.com", 465, context=context) as server:
                 server.login("support@fivebit.xyz", "4gqkeawg")
                 m = email.message.Message()
-                m['from'] = "FiveBit Support <support@fivebit.xyz>"
                 m['to'] = str(em)
                 m['subject'] = "FiveBit Account Confirmation"
                 m.set_payload(f"Thank you for creating an account! Please confirm your account by clicking on this link: http://www.fivebit.xyz/confirm/{auth_token}")

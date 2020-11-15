@@ -12,10 +12,18 @@
     let startX;
     let scrollLeft;
     var b = 0;
+    var tempo = 160;
+    var barWidth = 60;
+
+    var player = {
+        active: false,
+        xPosition: 0,
+        measure: 1,
+        beat: 1
+    }
     
     
-    initializeJson(`{"name":"Untitled Song","measures":[{"index":0,"beats":{"1":["triangle,F4","triangle,F4","triangle,F4","triangle,F4","triangle,F4","triangle,F4"],"2":["","triangle,F4","triangle,F4","triangle,F4","",""],"3":["triangle,F4","triangle,F4","triangle,F4","triangle,F4","triangle,F4","triangle,F4"],"4":["","","","","",""]}},{"index":1,"beats":{"1":["sine,D4","sine,D4","sine,D4","sine,D4","sine,D4","sine,D4"],"2":["","","","","",""],"3":["","","","","",""],"4":["","triangle,F4","","","noise,N",""]}},{"index":2,"beats":{"1":["","","triangle,F4","","",""],"2":["","","","triangle,F4","",""],"3":["","","triangle,F4","","noise,N",""],"4":["","triangle,F4","","","",""]}},{"index":3,"beats":{"1":["","","triangle,F4","","",""],"2":["","","","triangle,F4","",""],"3":["","","","","",""],"4":["","","","","",""]}},{"index":4,"beats":{"1":["","","","","",""],"2":["","","","","",""],"3":["","","","","",""],"4":["","","","","",""]}},{"index":5,"beats":{"1":["","","","","",""],"2":["","","","","",""],"3":["","","","","",""],"4":["","","","","",""]}},{"index":6,"beats":{"1":["","","","","",""],"2":["","","","","",""],"3":["","","","","",""],"4":["","","","","",""]}},{"index":7,"beats":{"1":["","","","","",""],"2":["","","","","",""],"3":["","","","","",""],"4":["","","","","",""]}},{"index":8,"beats":{"1":["","","","","",""],"2":["","","","","",""],"3":["","","","","",""],"4":["","","","","",""]}},{"index":9,"beats":{"1":["","","","","",""],"2":["","","","","",""],"3":["","","","","",""],"4":["","","","","",""]}},{"index":10,"beats":{"1":["","","","","",""],"2":["","","","","",""],"3":["","","","","",""],"4":["","","","","",""]}},{"index":11,"beats":{"1":["","","","","",""],"2":["","","","","",""],"3":["","","","","",""],"4":["","","","","",""]}},{"index":12,"beats":{"1":["","","","","",""],"2":["","","","","",""],"3":["","","","","",""],"4":["","","","","",""]}},{"index":13,"beats":{"1":["","","","","",""],"2":["","","","","",""],"3":["","","","","",""],"4":["","","","","",""]}},{"index":14,"beats":{"1":["","","","","",""],"2":["","","","","",""],"3":["","","","","",""],"4":["","","","","",""]}},{"index":15,"beats":{"1":["","","","","",""],"2":["","","","","",""],"3":["","","","","",""],"4":["","","","","",""]}},{"index":16,"beats":{"1":["","","","","",""],"2":["","","","","",""],"3":["","","","","",""],"4":["","","","","",""]}},{"index":17,"beats":{"1":["","","","","",""],"2":["","","","","",""],"3":["","","","","",""],"4":["","","","","",""]}},{"index":18,"beats":{"1":["","","","","",""],"2":["","","","","",""],"3":["","","","","",""],"4":["","","","","",""]}},{"index":19,"beats":{"1":["","","","","",""],"2":["","","","","",""],"3":["","","","","",""],"4":["","","","","",""]}}]}`);
-    //initialize();
+    
     
     function playNote(type, frequency, duration, pitch) {
        
@@ -29,7 +37,7 @@
             const now = Tone.now()
             // ramp to "C2" over 2 seconds
             // start the oscillator for 2 seconds
-            noise.triggerAttack(now-0.1, 0.75);
+            noise.triggerAttack(now-0.1, 0.5);
             
       } else {
     
@@ -57,15 +65,7 @@
         }
     }
 
-var tempo = 160;
-var barWidth = 60;
 
-var player = {
-    active: false,
-    xPosition: 0,
-    measure: 1,
-    beat: 1
-}
 $(document).click(function(){
     Tone.start()
 });
@@ -167,89 +167,89 @@ function getNotes(measureNum, beatNum){
 }
 
 
+function onReady(){
+    const slider = document.querySelector(".measures");
+    var initialX;
+    var finalX;
+    var canMove = true;
 
-const slider = document.querySelector(".measures");
-var initialX;
-var finalX;
-var canMove = true;
+    var movingMarker = false;
+    $(".playMarker").mousedown(function(){
+        if(isDown){ return }
+        movingMarker = true;
+    })
+    $(".playMarker").mouseup(function(){
+        movingMarker = false;
+    });
 
-var movingMarker = false;
-$(".playMarker").mousedown(function(){
-    if(isDown){ return }
-    movingMarker = true;
-})
-$(".playMarker").mouseup(function(){
-    movingMarker = false;
-});
-
-$(document).mousemove(function(evt){
-    
-    if(!movingMarker){ return }
-    var x = evt.pageX - $(".measures").offset().left+$(".measures").scrollLeft();
-    x = Math.round(x / 60)*60;
-    if(canMove){
-        $(".playMarker").css("left",x+"px");
-    }
-    var beats = x/60;
-    var remainder = beats % 4;
-    var measure = (beats - remainder)/4;
-    console.log("Measure: "+(measure+1));
-    console.log("Remainder: "+(remainder+1));
-    player.measure = measure+1;
-    player.beat = remainder+1;
-    player.xPosition = x;
-});
-
-document.addEventListener("mouseup", e => {
-    movingMarker = false;
-})
-
-slider.addEventListener("mousedown", e => {
-  if(movingMarker){return}
-  isDown = true;
-  slider.classList.add("active");
-  startX = e.pageX - slider.offsetLeft;
-  scrollLeft = slider.scrollLeft;
-
-  initialX = startX;
-});
-
-slider.addEventListener("mouseenter", () => {
-    canMove = true;
-})
-
-slider.addEventListener("mouseleave", () => {
-  isDown = false;
-  slider.classList.remove("active");
-  canMove = false;
-});
-slider.addEventListener("mouseup", e => {
-  finalX = e.pageX - slider.offsetLeft;
-
-  if(finalX != startX){
-    setTimeout(function(){
-        slider.classList.remove("active");
-  isDown = false;
-    }, 2)
-    
-    return;
-  }
-
-  slider.classList.remove("active");
-  isDown = false;
-  movingMarker = false;
-});
-slider.addEventListener("mousemove", e => {
-    if(movingMarker){
+    $(document).mousemove(function(evt){
         
-    }
-  if (!isDown) return;
-  e.preventDefault();
-  const x = e.pageX - slider.offsetLeft;
-  const walk = x - startX;
-  slider.scrollLeft = scrollLeft - walk;
-});
+        if(!movingMarker){ return }
+        var x = evt.pageX - $(".measures").offset().left+$(".measures").scrollLeft();
+        x = Math.round(x / 60)*60;
+        if(canMove){
+            $(".playMarker").css("left",x+"px");
+        }
+        var beats = x/60;
+        var remainder = beats % 4;
+        var measure = (beats - remainder)/4;
+        console.log("Measure: "+(measure+1));
+        console.log("Remainder: "+(remainder+1));
+        player.measure = measure+1;
+        player.beat = remainder+1;
+        player.xPosition = x;
+    });
 
+    document.addEventListener("mouseup", e => {
+        movingMarker = false;
+    })
+
+    slider.addEventListener("mousedown", e => {
+    if(movingMarker){return}
+    isDown = true;
+    slider.classList.add("active");
+    startX = e.pageX - slider.offsetLeft;
+    scrollLeft = slider.scrollLeft;
+
+    initialX = startX;
+    });
+
+    slider.addEventListener("mouseenter", () => {
+        canMove = true;
+    })
+
+    slider.addEventListener("mouseleave", () => {
+    isDown = false;
+    slider.classList.remove("active");
+    canMove = false;
+    });
+    slider.addEventListener("mouseup", e => {
+    finalX = e.pageX - slider.offsetLeft;
+
+    if(finalX != startX){
+        setTimeout(function(){
+            slider.classList.remove("active");
+    isDown = false;
+        }, 2)
+        
+        return;
+    }
+
+    slider.classList.remove("active");
+    isDown = false;
+    movingMarker = false;
+    });
+    slider.addEventListener("mousemove", e => {
+        if(movingMarker){
+            
+        }
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - slider.offsetLeft;
+    const walk = x - startX;
+    slider.scrollLeft = scrollLeft - walk;
+    });
+}
 
 
 
@@ -257,10 +257,14 @@ function initializeJson(json){
     $(".layers").html("");
     
     json = JSON.parse(json);
-    var json_tempo = 120;
+    var json_tempo = json.tempo;
     var json_name = json.name;
     var json_measures = json.measures.length;
     var json_layers = 6;
+
+    $("#name").val(json_name);
+    $("#tempo").val(json_tempo);
+    tempo = json_tempo;
 
     var json_measures_object = json.measures;
     console.log(json);
@@ -328,6 +332,9 @@ function initializeJson(json){
     }
 
     $(".measures").height(layers*60);
+    onReady();
+
+    
 }
 
 
@@ -364,4 +371,5 @@ function initialize(){
     }
 
     $(".measures").height(layers*60);
+    onReady();
 }

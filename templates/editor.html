@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/style.css">
+<script src="/static/js/band.js"></script>
+</head>
+<body class="noselect">
+    <form>
+
+    <div class="fullContainer">
+        <div class="section">
+            <p class="background">FiveBit Audio Synthesizer for Microsoft DOS</p>
+
+            <p><input type="text" id="name" placeholder="Click to edit song name" maxlength=24></p>
+        </div>
+
+        <div class="section " style="margin-top: 2em">
+            <div class="section optionPanel">
+
+                <div class="instruments noselect">
+
+                    <p id="square" class="selected">Square</p>
+                    <p id="sawtooth">Saw</p>
+                    <p id="sine">Sine</p>
+                    <p id="triangle">Triangle</p>
+                    <p id="noise">Noise</p>
+                    <p id="remove">X</p>
+
+                </div>
+                <div class="piano noselect">
+                    <div class="octave">
+                        <p>Octave</p><br>
+                        <div class="increment noselect" id="decrease">
+                            <p>-</p>
+                        </div>
+                        <input type="number" id="octave" value=4 readonly>
+                        <div class="increment noselect" id="increase">
+                            <p>+</p>
+                        </div>
+                    </div>
+
+                    <div class="key" id="keyC">
+                        <p>C<span class="currentOctave">4</span></p>
+                    </div>
+                    <div class="key minor" id="keyCsharp">
+                        <p>C#<span class="currentOctave">4</span></p>
+                    </div>
+                    <div class="key after" id="keyD">
+                        <p>D<span class="currentOctave">4</span></p>
+                    </div>
+                    <div class="key minor" id="keyDsharp">
+                        <p>D#<span class="currentOctave">4</span></p>
+                    </div>
+                    <div class="key after" id="keyE" >
+                        <p>E<span class="currentOctave">4</span></p>
+                    </div>
+                    <div class="key selected" id="keyF">
+                        <p>F<span class="currentOctave">4</span></p>
+                    </div>
+                    <div class="key minor" id="keyFsharp">
+                        <p>F#<span class="currentOctave">4</span></p>
+                    </div>
+                    <div class="key after" id="keyG">
+                        <p>G<span class="currentOctave">4</span></p>
+                    </div>
+                    <div class="key minor" id="keyGsharp">
+                        <p>G#<span class="currentOctave">4</span></p>
+                    </div>
+                    <div class="key after" id="keyA">
+                        <p>A<span class="currentOctave">4</span></p>
+                    </div>
+                    <div class="key minor" id="keyAsharp">
+                        <p>A#<span class="currentOctave">4</span></p>
+                    </div>
+                    <div class="key after" id="keyB">
+                        <p>B<span class="currentOctave">4</span></p>
+                    </div>
+                    <div class="key" id="keyChigh">
+                        <p>C<span class="currentOctaveUp">5</span></p>
+                    </div>
+                </div>
+                <div class="options">
+                    <p class="tempo">Tempo: <input id="tempo" type="number" value=120></p>
+
+                    <p id="play">Play</p>
+                    <p id="pause">Pause</p>
+                    <p id="stop">Stop</p>
+                    <p id="save">Save</p>
+                </div>
+
+                
+            </div>
+
+            <div class="section double">
+                
+                    
+                <div class="layers">
+                    
+                </div>
+                
+                
+            </div>
+        </div>
+    </div>
+    </form>
+<script src="https://tonejs.github.io/build/Tone.js"></script>
+<script src="/static/js/music.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>    
+<script src="/static/js/player.js"></script>
+<script defer src="/static/js/editor.js"></script>
+
+<script>
+    initialize();
+</script>
+</body>
