@@ -113,8 +113,11 @@
 
 <script>
 
-    const j = "json here";
-    var usingJson = false; // Change this
+    const j = `{{song_data[4]|safe}}`.replace("b'", '').replace("'", '');
+    var usingJson = true; // Change this
+    if(j == ''){
+        usingJson = false; // Change this
+    }
     if(usingJson){
         initializeJson(j);
     } else {
